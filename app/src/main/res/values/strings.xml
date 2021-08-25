@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MovieSearcher</string>
+    <string name="press">Press</string>
+    <string name="button_pressed">Button was pressed!</string>
 </resources>

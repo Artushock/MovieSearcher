@@ -10,5 +10,6 @@ enum class MovieGenre {
     COMEDY,
     MELODRAMA,
     MUSIC,
-    NOIR
+    NOIR,
+    UNKNOWN
 }

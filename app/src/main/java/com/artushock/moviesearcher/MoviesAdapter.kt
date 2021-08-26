@@ -24,7 +24,7 @@ class MoviesAdapter(private val data: MovieList) : RecyclerView.Adapter<MoviesAd
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.movieName.text = data.movies[position].name
-        holder.movieGenre.text = getGenreString(data.movies[position].genre)
+        holder.movieGenre.text = getStringByGenre(data.movies[position].genre)
         holder.movieRating.text = data.movies[position].rating.toString()
     }
 

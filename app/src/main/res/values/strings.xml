@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">MovieSearcher</string>
-    <string name="press">Press</string>
     <string name="clear_str">Clear</string>
     <string name="add_str">Add</string>
-    <string name="edit_str">Edit</string>
+    <string name="cancel_str">Cancel</string>
 </resources>

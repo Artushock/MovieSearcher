@@ -3,4 +3,9 @@
     <string name="clear_str">Clear</string>
     <string name="add_str">Add</string>
     <string name="cancel_str">Cancel</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_str">Main</string>
+    <string name="main_search">Search</string>
+    <string name="main_settings">Settings</string>
 </resources>

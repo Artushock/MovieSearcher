@@ -3,20 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/nav_main">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/nav_main"
         android:name="com.artushock.moviesearcher.view.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" />
+
     <fragment
-        android:id="@+id/searchFragment"
+        android:id="@+id/nav_search"
         android:name="com.artushock.moviesearcher.view.SearchFragment"
         android:label="search_fragment"
         tools:layout="@layout/search_fragment" />
     <fragment
-        android:id="@+id/settingsFragment"
+        android:id="@+id/nav_settings"
         android:name="com.artushock.moviesearcher.view.SettingsFragment"
         android:label="SettingsFragment" />
 </navigation>

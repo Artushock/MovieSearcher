@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher
+package com.artushock.moviesearcher.model
 
 data class Movie(
         val name: String = "",

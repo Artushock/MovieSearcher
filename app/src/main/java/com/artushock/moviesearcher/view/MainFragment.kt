@@ -1,11 +1,11 @@
 package com.artushock.moviesearcher.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
@@ -18,6 +18,25 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main_options_menu, menu)
+        MenuCompat.setGroupDividerEnabled(menu, true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            //TODO: Implements after defining menus
+            else -> false
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +55,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
-
-
     }
 
 }

@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/nav_main"
         android:name="com.artushock.moviesearcher.view.MainFragment"
-        android:label="main_fragment"
+        android:label="Main"
         tools:layout="@layout/main_fragment" />
 
     <fragment
         android:id="@+id/nav_search"
         android:name="com.artushock.moviesearcher.view.SearchFragment"
-        android:label="search_fragment"
+        android:label="Search"
         tools:layout="@layout/search_fragment" />
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.artushock.moviesearcher.view.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="Settings" />
 </navigation>

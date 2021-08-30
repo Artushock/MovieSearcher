@@ -1,15 +1,21 @@
 package com.artushock.moviesearcher.model
 
-enum class MovieGenre {
-    ACTION,
-    WESTERN,
-    GANGSTER,
-    DETECTIVE,
-    DRAMA,
-    HISTORICAL,
-    COMEDY,
-    MELODRAMA,
-    MUSIC,
-    NOIR,
-    UNKNOWN
+enum class MovieGenre(val genreName: String) {
+    ACTION("Action film"),
+    WESTERN("Western"),
+    GANGSTER("Gangster film"),
+    DETECTIVE("Detective"),
+    DRAMA("Drama"),
+    HISTORICAL("Historical film"),
+    COMEDY("Comedy"),
+    MELODRAMA("Melodrama"),
+    MUSIC("Music film"),
+    NOIR("Noir"),
+    POLITICAL("Political film"),
+    ADVENTURE("Adventure film"),
+    FAIRY("Fairy tale"),
+    TRAGEDY("Tragedy"),
+    TRAGICOMEDY("Tragicomedy"),
+    UNKNOWN("Action");
+
 }

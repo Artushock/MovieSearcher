@@ -16,6 +16,8 @@ enum class MovieGenre(val genreName: String) {
     FAIRY("Fairy tale"),
     TRAGEDY("Tragedy"),
     TRAGICOMEDY("Tragicomedy"),
+    HORROR("Horror"),
+    THRILLER("Thriller"),
     UNKNOWN("Action");
 
 }

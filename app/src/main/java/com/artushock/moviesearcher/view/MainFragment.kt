@@ -11,20 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.MovieGenre
 import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.MoviesPreviewAdapter
 import com.artushock.moviesearcher.viewmodel.MainViewModel
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-
-    ///
-
-    ///
 
     companion object {
         fun newInstance() = MainFragment()
@@ -72,29 +65,49 @@ class MainFragment : Fragment() {
         viewModel.getMovieListFromLocalStorage()
     }
 
-    private fun fillRecyclerView(movies: ArrayList<Movie>, view: View) {
-        val newMoviesRecyclerView: RecyclerView = view.findViewById(R.id.new_movies_recycler_view)
+    private fun initNewMoviesRecyclerView(movies: ArrayList<Movie>) {
+        val newMoviesRecyclerView: RecyclerView = binding.newMoviesRecyclerView
         newMoviesRecyclerView.setHasFixedSize(true)
-
 
         val newMoviesLayoutManager = LinearLayoutManager(context)
         newMoviesLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         newMoviesRecyclerView.layoutManager = newMoviesLayoutManager
 
-        val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
-        itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
-        newMoviesRecyclerView.addItemDecoration(itemDecoration)
+        newMoviesRecyclerView.addItemDecoration(getDividerItemDecoration())
+
         newMoviesRecyclerView.adapter = MoviesPreviewAdapter(movies)
     }
 
+    private fun initPopularMoviesRecyclerView(movies: ArrayList<Movie>) {
+        val popularMoviesRecyclerView: RecyclerView = binding.popularMoviesRecyclerView
+        popularMoviesRecyclerView.setHasFixedSize(true)
+
+        val popularMoviesLayoutManager = LinearLayoutManager(context)
+        popularMoviesLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        popularMoviesRecyclerView.layoutManager = popularMoviesLayoutManager
+
+        popularMoviesRecyclerView.addItemDecoration(getDividerItemDecoration())
+
+
+        popularMoviesRecyclerView.adapter = MoviesPreviewAdapter(movies)
+    }
+
+    private fun getDividerItemDecoration(): DividerItemDecoration {
+        val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
+        itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
+        return itemDecoration
+    }
+
     private fun render(data: MovieListState, view: View) {
-        when(data){
+        when (data) {
             is MovieListState.Loading -> {
-                //
+                binding.mainFragmentProgressBar.visibility = View.VISIBLE
             }
             is MovieListState.Success -> {
+                binding.mainFragmentProgressBar.visibility = View.GONE
                 val movies = data.movieList
-                fillRecyclerView(movies, view)
+                initNewMoviesRecyclerView(movies)
+                initPopularMoviesRecyclerView(movies)
             }
         }
     }

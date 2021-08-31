@@ -11,13 +11,13 @@
         android:layout_weight="1">
 
         <ImageView
+            android:id="@+id/movie_item_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#CACACA"
             android:src="@drawable/empty"></ImageView>
 
-        <ImageView
-            android:id="@+id/movie_to_notes_item"
+        <ImageButton
             android:layout_width="24dp"
             android:layout_height="32dp"
             android:layout_gravity="right"

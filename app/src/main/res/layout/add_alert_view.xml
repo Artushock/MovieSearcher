@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/movie_name_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:layout_margin="16dp"
-        android:hint="Movie name"/>
+        android:hint="Movie name"
+        android:inputType="textPersonName" />
 
     <Spinner
         android:id="@+id/genre_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:layout_margin="16dp"
-        android:hint="Movie name"/>
+        android:hint="Movie name"
+        android:inputType="textPersonName" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/rating_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:stepSize="1"
         android:valueFrom="0"
-        android:valueTo="10"
-        android:stepSize="1"/>
-
+        android:valueTo="10" />
 
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.artushock.moviesearcher.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -64,7 +65,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getLiveData().observe(viewLifecycleOwner, { render(it, view) })
-        viewModel.getMovieListFromLocalStorage()
+        viewModel.getMovieList()
     }
 
     private fun initNewMoviesRecyclerView(movies: ArrayList<Movie>) {
@@ -108,7 +109,7 @@ class MainFragment : Fragment() {
             is MovieListState.Error -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
                 Snackbar.make(view, "Error", Snackbar.LENGTH_LONG)
-                    .setAction("Reload") {viewModel.getMovieListFromLocalStorage()}
+                    .setAction("Reload") { viewModel.getMovieList() }
                     .show()
             }
             is MovieListState.SuccessLocal -> {
@@ -116,14 +117,27 @@ class MainFragment : Fragment() {
                 val movies = data.movieList
                 initNewMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.NEW))
                 initPopularMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.POPULAR))
+                Toast.makeText(context, "Local data uploaded", Toast.LENGTH_SHORT).show()
             }
+
+            is MovieListState.SuccessRemote -> {
+                binding.mainFragmentProgressBar.visibility = View.GONE
+                val movies = data.movieList
+                initNewMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.NEW))
+                initPopularMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.POPULAR))
+                Toast.makeText(context, "Remote data uploaded", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 
-    private fun getMoviesByCategory(movies: ArrayList<Movie>, category: MovieCategory): ArrayList<Movie> {
+    private fun getMoviesByCategory(
+        movies: ArrayList<Movie>,
+        category: MovieCategory
+    ): ArrayList<Movie> {
         val result = ArrayList<Movie>()
-        for (movie in movies){
-            if (movie.category == category){
+        for (movie in movies) {
+            if (movie.category == category) {
                 result.add(movie)
             }
         }

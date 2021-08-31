@@ -24,4 +24,6 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="exit">Exit</string>
     <string name="refresh">Refresh</string>
+    <string name="popular">Popular</string>
+    <string name="new_movies">New movies</string>
 </resources>

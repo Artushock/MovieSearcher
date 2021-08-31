@@ -1,7 +1,5 @@
 package com.artushock.moviesearcher.model
 
-import kotlin.random.Random
-
 class RepositoryImpl : Repository {
 
     override fun getMovieListFromLocalStorage(): ArrayList<Movie> {
@@ -20,7 +18,14 @@ class RepositoryImpl : Repository {
         data.add(Movie("Москва слехам не верит", MovieGenre.ACTION, 10f, MovieCategory.POPULAR))
         data.add(Movie("Форрест Гамп", MovieGenre.DRAMA, 9.6f, MovieCategory.POPULAR))
         data.add(Movie("Матрица", MovieGenre.ACTION, 9.7f, MovieCategory.POPULAR))
-        data.add(Movie("Пролетая над гнездом кукушки",MovieGenre.ACTION,8.4f, MovieCategory.POPULAR))
+        data.add(
+            Movie(
+                "Пролетая над гнездом кукушки",
+                MovieGenre.ACTION,
+                8.4f,
+                MovieCategory.POPULAR
+            )
+        )
         data.add(Movie("Город Бога", MovieGenre.ACTION, 9f, MovieCategory.POPULAR))
         data.add(Movie("Молчание ягнят", MovieGenre.DRAMA, 10f, MovieCategory.POPULAR))
         data.add(Movie("Леон", MovieGenre.ACTION, 7.4f, MovieCategory.POPULAR))

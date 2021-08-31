@@ -13,18 +13,22 @@ class MainViewModel(
 ) : ViewModel() {
 
     fun getLiveData() = liveDataToObserve
-    fun getMovieListFromLocalStorage() = getList()
+    fun getMovieList() = getList()
 
-    private fun getList(){
+    private fun getList() {
         liveDataToObserve.value = MovieListState.Loading
-        Thread{
-            Thread.sleep(3000)
-            if(Random.nextBoolean()){
-                liveDataToObserve.postValue(MovieListState.SuccessLocal(repository.getMovieListFromLocalStorage()))
-            } else{
+        Thread {
+            Thread.sleep(2000)
+
+            if (Random.nextBoolean()) {
+                if (Random.nextBoolean()) {
+                    liveDataToObserve.postValue(MovieListState.SuccessRemote(repository.getMovieListFromRemoteStorage()))
+                } else {
+                    liveDataToObserve.postValue(MovieListState.SuccessLocal(repository.getMovieListFromLocalStorage()))
+                }
+            } else {
                 liveDataToObserve.postValue(MovieListState.Error)
             }
-
         }.start()
     }
 

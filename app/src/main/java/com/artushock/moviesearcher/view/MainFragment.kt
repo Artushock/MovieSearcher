@@ -12,9 +12,11 @@ import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MovieGenre
+import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.MoviesPreviewAdapter
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
@@ -44,7 +46,6 @@ class MainFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
-            //TODO: Implements after defining menus
             else -> false
         }
     }
@@ -67,9 +68,12 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.getLiveData().observe(viewLifecycleOwner, { render(it, view) })
+        viewModel.getMovieListFromLocalStorage()
+    }
 
-        val newMoviesRecyclerView : RecyclerView = view.findViewById(R.id.new_movies_recycler_view)
+    private fun fillRecyclerView(movies: ArrayList<Movie>, view: View) {
+        val newMoviesRecyclerView: RecyclerView = view.findViewById(R.id.new_movies_recycler_view)
         newMoviesRecyclerView.setHasFixedSize(true)
 
 
@@ -77,31 +81,22 @@ class MainFragment : Fragment() {
         newMoviesLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         newMoviesRecyclerView.layoutManager = newMoviesLayoutManager
 
-        val itemDecoration = DividerItemDecoration (context, LinearLayoutManager.HORIZONTAL)
+        val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
         itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
         newMoviesRecyclerView.addItemDecoration(itemDecoration)
-        newMoviesRecyclerView.adapter = MoviesPreviewAdapter(initData())
+        newMoviesRecyclerView.adapter = MoviesPreviewAdapter(movies)
     }
 
-    private fun initData(): ArrayList<Movie> {
-        val data = ArrayList<Movie>()
-        data.add(Movie("Побег из Шоушенка", MovieGenre.DRAMA, 10f))
-        data.add(Movie("Крёстный отец", MovieGenre.ACTION, 10f))
-        data.add(Movie("Начало", MovieGenre.ACTION, 9f))
-        data.add(Movie("Москва слехам не верит", MovieGenre.ACTION, 9f))
-        data.add(Movie("Форрест Гамп", MovieGenre.DRAMA, 10f))
-        data.add(Movie("Матрица", MovieGenre.ACTION, 10f))
-        data.add(Movie("Пролетая над гнездом кукушки", MovieGenre.ACTION, 9f))
-        data.add(Movie("Город Бога", MovieGenre.ACTION, 9f))
-        data.add(Movie("Молчание ягнят", MovieGenre.DRAMA, 10f))
-        data.add(Movie("Леон", MovieGenre.ACTION, 10f))
-        data.add(Movie("Американская история Икс", MovieGenre.ACTION, 9f))
-        data.add(Movie("Касабланка", MovieGenre.ACTION, 9f))
-        data.add(Movie("Однажды на Диком Западеа", MovieGenre.WESTERN, 8f))
-        data.add(Movie("Чужой", MovieGenre.ACTION, 8f))
-        data.add(Movie("Великий диктатор", MovieGenre.COMEDY, 9f))
-        data.add(Movie("Москва слехам не верит", MovieGenre.ACTION, 9f))
-        return data
+    private fun render(data: MovieListState, view: View) {
+        when(data){
+            is MovieListState.Loading -> {
+                //
+            }
+            is MovieListState.Success -> {
+                val movies = data.movieList
+                fillRecyclerView(movies, view)
+            }
+        }
     }
 
 }

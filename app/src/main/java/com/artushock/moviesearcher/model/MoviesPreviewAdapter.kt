@@ -12,7 +12,6 @@ class MoviesPreviewAdapter(private val data: ArrayList<Movie>) :
     RecyclerView.Adapter<MoviesPreviewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         val name: TextView = view.findViewById(R.id.movie_name_item)
         val genre: TextView = view.findViewById(R.id.movie_genre_item)
         val rating: TextView = view.findViewById(R.id.movie_rate_item)
@@ -31,8 +30,6 @@ class MoviesPreviewAdapter(private val data: ArrayList<Movie>) :
         holder.name.text = data[position].name
         holder.genre.text = data[position].genre.genreName
         holder.rating.text = data[position].rating.toString()
-
-
     }
 
     override fun getItemCount(): Int {

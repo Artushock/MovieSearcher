@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.Movie
+import com.artushock.moviesearcher.model.MovieCategory
 import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.MoviesPreviewAdapter
 import com.artushock.moviesearcher.viewmodel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
@@ -103,13 +105,29 @@ class MainFragment : Fragment() {
             is MovieListState.Loading -> {
                 binding.mainFragmentProgressBar.visibility = View.VISIBLE
             }
-            is MovieListState.Success -> {
+            is MovieListState.Error -> {
+                binding.mainFragmentProgressBar.visibility = View.GONE
+                Snackbar.make(view, "Error", Snackbar.LENGTH_LONG)
+                    .setAction("Reload") {viewModel.getMovieListFromLocalStorage()}
+                    .show()
+            }
+            is MovieListState.SuccessLocal -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
                 val movies = data.movieList
-                initNewMoviesRecyclerView(movies)
-                initPopularMoviesRecyclerView(movies)
+                initNewMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.NEW))
+                initPopularMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.POPULAR))
             }
         }
+    }
+
+    private fun getMoviesByCategory(movies: ArrayList<Movie>, category: MovieCategory): ArrayList<Movie> {
+        val result = ArrayList<Movie>()
+        for (movie in movies){
+            if (movie.category == category){
+                result.add(movie)
+            }
+        }
+        return result
     }
 
 }

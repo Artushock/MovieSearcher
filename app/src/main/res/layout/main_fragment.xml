@@ -10,42 +10,44 @@
         android:id="@+id/main_fragment_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F4CA16"
+        android:background="#F0EAD6"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
+
         <ProgressBar
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbarSize="@dimen/material_emphasis_high_type"/>
+            android:layout_gravity="center"
+            android:scrollbarSize="@dimen/material_emphasis_high_type" />
     </FrameLayout>
 
     <TextView
+        android:layout_marginTop="8dp"
         android:id="@+id/new_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New movies"
-        android:textSize="32sp"/>
+        android:textSize="32sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/new_movies_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/popular_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Popular"
-        android:textSize="32sp"
-        android:layout_marginTop="16dp"/>
+        android:textSize="32sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/popular_movies_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
 
 
 </LinearLayout>

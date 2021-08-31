@@ -1,11 +1,12 @@
 package com.artushock.moviesearcher.model
 
+import kotlin.random.Random
+
 class RepositoryImpl : Repository {
 
     override fun getMovieListFromLocalStorage(): ArrayList<Movie> {
         return getTestData()
     }
-
 
     override fun getMovieListFromRemoteStorage(): ArrayList<Movie> {
         return getTestData()

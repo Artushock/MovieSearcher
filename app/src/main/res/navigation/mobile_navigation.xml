@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/nav_main">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="com.artushock.moviesearcher.view.MainFragment"
+        android:label="Main"
+        tools:layout="@layout/main_fragment" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.artushock.moviesearcher.view.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/search_fragment" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.artushock.moviesearcher.view.SettingsFragment"
+        android:label="Settings" />
+</navigation>

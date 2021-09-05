@@ -14,17 +14,12 @@ import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MovieCategory
 import com.artushock.moviesearcher.model.MovieListState
-import com.artushock.moviesearcher.model.MoviesPreviewAdapter
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private lateinit var viewModel: MainViewModel
 
@@ -39,21 +34,12 @@ class MainFragment : Fragment() {
         MenuCompat.setGroupDividerEnabled(menu, true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return when (item.itemId) {
-            else -> false
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
-
     }
 
     override fun onDestroy() {
@@ -68,32 +54,6 @@ class MainFragment : Fragment() {
         viewModel.getMovieList()
     }
 
-    private fun initNewMoviesRecyclerView(movies: ArrayList<Movie>) {
-        val newMoviesRecyclerView: RecyclerView = binding.newMoviesRecyclerView
-        newMoviesRecyclerView.setHasFixedSize(true)
-
-        val newMoviesLayoutManager = LinearLayoutManager(context)
-        newMoviesLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        newMoviesRecyclerView.layoutManager = newMoviesLayoutManager
-
-        newMoviesRecyclerView.addItemDecoration(getDividerItemDecoration())
-
-        newMoviesRecyclerView.adapter = MoviesPreviewAdapter(movies)
-    }
-
-    private fun initPopularMoviesRecyclerView(movies: ArrayList<Movie>) {
-        val popularMoviesRecyclerView: RecyclerView = binding.popularMoviesRecyclerView
-        popularMoviesRecyclerView.setHasFixedSize(true)
-
-        val popularMoviesLayoutManager = LinearLayoutManager(context)
-        popularMoviesLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        popularMoviesRecyclerView.layoutManager = popularMoviesLayoutManager
-
-        popularMoviesRecyclerView.addItemDecoration(getDividerItemDecoration())
-
-
-        popularMoviesRecyclerView.adapter = MoviesPreviewAdapter(movies)
-    }
 
     private fun getDividerItemDecoration(): DividerItemDecoration {
         val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
@@ -115,21 +75,44 @@ class MainFragment : Fragment() {
             is MovieListState.SuccessLocal -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
                 val movies = data.movieList
-                initNewMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.NEW))
-                initPopularMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.POPULAR))
+                showMainViewers(movies)
                 Toast.makeText(context, "Local data uploaded", Toast.LENGTH_SHORT).show()
             }
 
             is MovieListState.SuccessRemote -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
                 val movies = data.movieList
-                initNewMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.NEW))
-                initPopularMoviesRecyclerView(getMoviesByCategory(movies, MovieCategory.POPULAR))
+                showMainViewers(movies)
                 Toast.makeText(context, "Remote data uploaded", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
+
+    private fun showMainViewers(movies: ArrayList<Movie>) {
+        val popularRV: RecyclerView = binding.popularMoviesRecyclerView
+        initRecyclerView(popularRV, movies, MovieCategory.POPULAR)
+
+        val newRV: RecyclerView = binding.newMoviesRecyclerView
+        initRecyclerView(newRV, movies, MovieCategory.NEW)
+    }
+
+    private fun initRecyclerView(
+        rw: RecyclerView,
+        movies: ArrayList<Movie>,
+        moviesCategory: MovieCategory
+    ) {
+
+        val actualMovies = getMoviesByCategory(movies, moviesCategory)
+        rw.setHasFixedSize(true)
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        rw.layoutManager = linearLayoutManager
+        rw.addItemDecoration(getDividerItemDecoration())
+
+        rw.adapter = MoviesPreviewAdapter(actualMovies)
+    }
+
 
     private fun getMoviesByCategory(
         movies: ArrayList<Movie>,

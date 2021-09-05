@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
+import com.artushock.moviesearcher.model.Movie
 import java.util.*
 
 class MoviesPreviewAdapter(private val data: ArrayList<Movie>) :
@@ -15,7 +16,6 @@ class MoviesPreviewAdapter(private val data: ArrayList<Movie>) :
         val name: TextView = view.findViewById(R.id.movie_name_item)
         val genre: TextView = view.findViewById(R.id.movie_genre_item)
         val rating: TextView = view.findViewById(R.id.movie_rate_item)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

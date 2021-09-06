@@ -101,8 +101,6 @@ class MainFragment : Fragment() {
         movies: ArrayList<Movie>,
         moviesCategory: MovieCategory
     ) {
-
-        val actualMovies = getMoviesByCategory(movies, moviesCategory)
         rw.setHasFixedSize(true)
 
         val linearLayoutManager = LinearLayoutManager(context)
@@ -110,14 +108,17 @@ class MainFragment : Fragment() {
         rw.layoutManager = linearLayoutManager
         rw.addItemDecoration(getDividerItemDecoration())
 
-        rw.adapter = MoviesPreviewAdapter(actualMovies)
+        val adapter = MoviesPreviewAdapter()
+        adapter.movieList = getMoviesByCategory(movies, moviesCategory)
+
+        rw.adapter = adapter
     }
 
 
     private fun getMoviesByCategory(
         movies: ArrayList<Movie>,
         category: MovieCategory
-    ): ArrayList<Movie> {
+    ): List<Movie> {
         val result = ArrayList<Movie>()
         for (movie in movies) {
             if (movie.category == category) {

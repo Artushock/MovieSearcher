@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.MenuCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -110,6 +111,18 @@ class MainFragment : Fragment() {
 
         val adapter = MoviesPreviewAdapter()
         adapter.movieList = getMoviesByCategory(movies, moviesCategory)
+
+        adapter.movieItemClick = object : MoviesPreviewAdapter.OnMovieItemClickListener {
+            override fun onMovieItemClick(movie: Movie) {
+                val manager = activity?.supportFragmentManager
+                if (manager != null) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(MOVIE_FOR_DETAIL, movie)
+                    val navController = findNavController()
+                    navController.navigate(R.id.movieDetailFragment, bundle)
+                }
+            }
+        }
 
         rw.adapter = adapter
     }

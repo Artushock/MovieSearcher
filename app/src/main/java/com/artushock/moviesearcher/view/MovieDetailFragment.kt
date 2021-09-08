@@ -11,7 +11,6 @@ import com.artushock.moviesearcher.model.Movie
 
 const val MOVIE_FOR_DETAIL = "MOVIE_FOR_DETAIL"
 
-
 class MovieDetailFragment : Fragment() {
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
@@ -35,29 +34,23 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.movieNameDetailTv.text = movie?.name
-        binding.movieFullDetailTv.text = movie?.extensionalName
-        binding.genreDetailTv.text = movie?.mainGenre?.genreName
-        binding.runningTimeDetailTv.text = movie?.runningTime.toString()
-        binding.ratingDetailTv.text = movie?.rating.toString()
-        binding.budgetDetailTv.text = getString(R.string.budget_format, movie?.budget)
-        binding.boxOfficeDetailTv.text = getString(R.string.box_office_format, movie?.boxOffice)
-        binding.releaseDateDetailTv.text = movie?.releaseDate.toString()
-        binding.descriptionDetailTv.text = movie?.description
+        with(binding) {
+            movie?.let { movie ->
+                movieNameDetailTv.text = movie.name
+                movieFullDetailTv.text = movie.extensionalName
+                genreDetailTv.text = movie.mainGenre.genreName
+                runningTimeDetailTv.text = movie.runningTime.toString()
+                ratingDetailTv.text = movie.rating.toString()
+                budgetDetailTv.text = getString(R.string.budget_format, movie.budget)
+                boxOfficeDetailTv.text = getString(R.string.box_office_format, movie.boxOffice)
+                releaseDateDetailTv.text = movie.releaseDate.format()
+                descriptionDetailTv.text = movie.description
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-
-    companion object {
-        fun newInstance(bundle: Bundle) =
-            MovieDetailFragment().apply {
-                arguments = bundle.apply {
-                    putParcelable(MOVIE_FOR_DETAIL, movie)
-                }
-            }
     }
 }

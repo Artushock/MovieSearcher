@@ -11,6 +11,10 @@
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
 
+    <!-- Snackbar Preferences -->
+    <string name="error">Error</string>
+    <string name="reload">Reload</string>
+
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
     <string name="reply_title">Default reply action</string>

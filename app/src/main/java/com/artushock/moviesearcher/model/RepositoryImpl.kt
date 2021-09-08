@@ -10,8 +10,8 @@ class RepositoryImpl : Repository {
         return getTestData()
     }
 
-    private fun getTestData(): ArrayList<Movie> {
-        return arrayListOf(
+    private fun getTestData(): ArrayList<Movie>  =
+        arrayListOf(
             Movie(
                 "Побег из Шоушенка",
                 mainGenre = MovieGenre.DRAMA,
@@ -164,5 +164,4 @@ class RepositoryImpl : Repository {
                 category = MovieCategory.NEW
             )
         )
-    }
 }

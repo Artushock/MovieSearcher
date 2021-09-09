@@ -17,36 +17,35 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
+        android:textAlignment="textStart"
         android:gravity="center"
-        tools:text="The Godfather" />
+        android:maxEms="8"
+        android:minEms="8"
+        tools:text="The Godfather"
+        tools:ignore="RtlCompat" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
         android:gravity="end">
-
-        <TextView
-            android:id="@+id/director_search_item_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
-            tools:text="Mario Puzo" />
 
         <TextView
             android:id="@+id/release_date_search_item_rv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
             android:gravity="center"
+            android:maxEms="3"
+            android:minEms="3"
             tools:text="1972" />
 
         <TextView
             android:id="@+id/country_search_item_rv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
             android:gravity="center"
+            android:minEms="8"
             tools:text="USA" />
 
         <TextView
@@ -54,8 +53,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textAlignment="textStart"
+            android:maxEms="3"
+            android:minEms="3"
             app:drawableLeftCompat="@drawable/ic_baseline_star_24"
-            tools:text="8.6" />
+            tools:text="10.6"
+            tools:ignore="RtlCompat" />
 
     </LinearLayout>
 

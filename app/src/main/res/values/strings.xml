@@ -35,4 +35,6 @@
     <string name="movie_image_content_description">Movie image</string>
     <string name="bookmark_image_content_description">Bookmark image</string>
     <string name="star_image_content_description">Star image</string>
+    <string name="movie_icon">Movie icon</string>
+    <string name="movie_name">Movie name</string>
 </resources>

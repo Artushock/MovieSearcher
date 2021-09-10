@@ -21,4 +21,12 @@ class SearchViewModel(
             liveDataToObserve.postValue(MovieListState.SuccessRemote(repository.getMovieListFromRemoteStorage()))
         }.start()
     }
+
+    fun findMovie(text: String) {
+        liveDataToObserve.value = MovieListState.Loading
+        Thread {
+            Thread.sleep(1000)
+            liveDataToObserve.postValue(MovieListState.SuccessRemote(repository.getMoviesByName(text)))
+        }.start()
+    }
 }

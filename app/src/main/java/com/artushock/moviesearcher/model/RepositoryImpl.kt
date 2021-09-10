@@ -10,6 +10,20 @@ class RepositoryImpl : Repository {
         return getTestData()
     }
 
+    override fun getMoviesByName(text: String): ArrayList<Movie> {
+        val foundMovies: ArrayList<Movie> = arrayListOf()
+        val movies = getTestData()
+
+        for (m in movies){
+            if (m.name
+                    .lowercase()
+                    .contains(text.lowercase())){
+                foundMovies.add(m)
+            }
+        }
+        return foundMovies
+    }
+
     private fun getTestData(): ArrayList<Movie>  =
         arrayListOf(
             Movie(

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_item"
     android:layout_width="match_parent"
     android:layout_height="64dp">
 
@@ -17,12 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
-        android:textAlignment="textStart"
         android:gravity="center"
         android:maxEms="8"
         android:minEms="8"
-        tools:text="The Godfather"
-        tools:ignore="RtlCompat" />
+        android:textAlignment="textStart"
+        tools:ignore="RtlCompat"
+        tools:text="The Godfather" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,12 +54,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textAlignment="textStart"
             android:maxEms="3"
             android:minEms="3"
+            android:textAlignment="textStart"
             app:drawableLeftCompat="@drawable/ic_baseline_star_24"
-            tools:text="10.6"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            tools:text="10.6" />
 
     </LinearLayout>
 

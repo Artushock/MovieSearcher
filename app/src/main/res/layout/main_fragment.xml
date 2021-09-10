@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".view.MainFragment">
 
     <FrameLayout
         android:id="@+id/main_fragment_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F0EAD6"
         android:visibility="gone"
         tools:visibility="gone">
 
@@ -25,7 +25,6 @@
         android:id="@+id/new_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:text="@string/new_movies"
         android:textSize="32sp" />
@@ -34,14 +33,12 @@
         android:id="@+id/new_movies_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/popular_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:text="@string/popular"
         android:textSize="32sp" />
@@ -50,7 +47,6 @@
         android:id="@+id/popular_movies_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp" />
 
 

@@ -1,30 +1,37 @@
 package com.artushock.moviesearcher.model
 
+import kotlin.random.Random
+
 class RepositoryImpl : Repository {
 
-    override fun getMovieListFromLocalStorage(): ArrayList<Movie> {
-        return getTestData()
-    }
-
-    override fun getMovieListFromRemoteStorage(): ArrayList<Movie> {
-        return getTestData()
-    }
+    override fun getMovieList(): ArrayList<Movie> =
+        getMovieListFromRemoteStorage() ?: getMovieListFromLocalStorage()
 
     override fun getMoviesByName(text: String): ArrayList<Movie> {
         val foundMovies: ArrayList<Movie> = arrayListOf()
         val movies = getTestData()
 
-        for (m in movies){
+        for (m in movies) {
             if (m.name
                     .lowercase()
-                    .contains(text.lowercase())){
+                    .contains(text.lowercase())
+            ) {
                 foundMovies.add(m)
             }
         }
         return foundMovies
     }
 
-    private fun getTestData(): ArrayList<Movie>  =
+    private fun getMovieListFromLocalStorage(): ArrayList<Movie> = getTestData()
+
+    private fun getMovieListFromRemoteStorage(): ArrayList<Movie>? =
+        if (Random.nextBoolean()) {
+            getTestData()
+        } else {
+            null
+        }
+
+    private fun getTestData(): ArrayList<Movie> =
         arrayListOf(
             Movie(
                 "Побег из Шоушенка",

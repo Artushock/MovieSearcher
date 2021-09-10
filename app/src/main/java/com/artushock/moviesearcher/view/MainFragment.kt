@@ -63,22 +63,14 @@ class MainFragment : Fragment() {
             }
             is MovieListState.Error -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
-                this.view?.showSnackBar(
-                    getString(R.string.error),
-                    getString(R.string.reload),
-                    { viewModel.getMovieList() })
             }
-            is MovieListState.SuccessLocal -> {
-                showMainViewers(data.movieList, "Local data uploaded")
-            }
-
-            is MovieListState.SuccessRemote -> {
-                showMainViewers(data.movieList, "Remote data uploaded")
+            is MovieListState.Success -> {
+                showMainViewers(data.movieList)
             }
         }
     }
 
-    private fun showMainViewers(movies: ArrayList<Movie>, msg: String) {
+    private fun showMainViewers(movies: ArrayList<Movie>) {
         binding.mainFragmentProgressBar.visibility = View.GONE
 
         val popularRV: RecyclerView = binding.popularMoviesRecyclerView
@@ -86,8 +78,6 @@ class MainFragment : Fragment() {
 
         val newRV: RecyclerView = binding.newMoviesRecyclerView
         initRecyclerView(newRV, movies, MovieCategory.NEW)
-
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     private fun initRecyclerView(

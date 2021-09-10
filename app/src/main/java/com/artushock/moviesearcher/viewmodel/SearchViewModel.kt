@@ -18,7 +18,7 @@ class SearchViewModel(
         liveDataToObserve.value = MovieListState.Loading
         Thread {
             Thread.sleep(1000)
-            liveDataToObserve.postValue(MovieListState.SuccessRemote(repository.getMovieListFromRemoteStorage()))
+            liveDataToObserve.postValue(MovieListState.Success(repository.getMovieList()))
         }.start()
     }
 
@@ -26,7 +26,7 @@ class SearchViewModel(
         liveDataToObserve.value = MovieListState.Loading
         Thread {
             Thread.sleep(1000)
-            liveDataToObserve.postValue(MovieListState.SuccessRemote(repository.getMoviesByName(text)))
+            liveDataToObserve.postValue(MovieListState.Success(repository.getMoviesByName(text)))
         }.start()
     }
 }

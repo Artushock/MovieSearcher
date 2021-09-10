@@ -9,8 +9,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.SearchFragmentBinding
 import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MovieListState
@@ -55,31 +57,37 @@ class SearchFragment : Fragment() {
             is MovieListState.Loading -> {
                 binding.searchFragmentProgressBar.visibility = View.VISIBLE
             }
-            is MovieListState.SuccessRemote -> {
+
+            is MovieListState.Success -> {
                 binding.searchFragmentProgressBar.visibility = View.GONE
                 val searchRecyclerView: RecyclerView = binding.searchResultRecyclerView
                 searchRecyclerView.setHasFixedSize(true)
                 val layoutManager = LinearLayoutManager(context)
                 searchRecyclerView.layoutManager = layoutManager
                 val adapter = MovieSearchAdapter()
-                adapter.movieList = it.movieList
-                adapter.onSearchedItemClickListener =
-                    object : MovieSearchAdapter.OnSearchedItemClickListener {
-                        override fun onSearchedItemClick(movie: Movie) {
-                            Toast.makeText(
-                                context,
-                                "Clicked item is ${movie.name}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                adapter.apply {
+                    movieList = it.movieList
+                    onSearchedItemClickListener =
+                        object : MovieSearchAdapter.OnSearchedItemClickListener {
+                            override fun onSearchedItemClick(movie: Movie) {
+                                val manager = activity?.supportFragmentManager
+                                if (manager != null) {
+                                    val bundle = Bundle()
+                                    bundle.putParcelable(MOVIE_FOR_DETAIL, movie)
+                                    val navController = findNavController()
+                                    navController.navigate(R.id.movieDetailFragment, bundle)
+                                }
+                            }
                         }
-                    }
-                searchRecyclerView.adapter = adapter
+                    searchRecyclerView.adapter = adapter
+                }
             }
-            else -> {
-                //
-
+            MovieListState.Error -> {
+                this.view?.showSnackBar(
+                    getString(R.string.error),
+                    getString(R.string.reload),
+                    { viewModel.getMovieList() })
             }
         }
     }
-
 }

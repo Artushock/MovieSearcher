@@ -11,7 +11,6 @@ import com.artushock.moviesearcher.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    //val TAG = "[Art_MainActivity]"
 
     private lateinit var binding: ActivityMainBinding
 
@@ -24,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_main,
@@ -35,7 +33,5 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
     }
 }

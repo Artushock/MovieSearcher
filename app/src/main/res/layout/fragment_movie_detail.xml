@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".view.MovieDetailFragment">
+
+    <TextView
+        android:id="@+id/movie_name_detail_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+
+        tools:text="Крестный отец" />
+
+    <TextView
+        android:id="@+id/movie_full_detail_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="Крестный отец" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#CACACA"
+            android:src="@drawable/empty"
+            android:contentDescription="@string/movie_image_content_description" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/genre_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_detail_text"
+                tools:text="Драма" />
+
+            <TextView
+                android:id="@+id/running_time_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="@dimen/small_detail_text"
+                tools:text="117 мин." />
+
+            <TextView
+                android:id="@+id/rating_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
+                android:textSize="@dimen/small_detail_text"
+                app:drawableStartCompat="@drawable/ic_baseline_star_24"
+                tools:text="9.6" />
+
+            <TextView
+                android:id="@+id/budget_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="@dimen/small_detail_text"
+                tools:text="Бюджет: 1 000 000 $ " />
+
+            <TextView
+                android:id="@+id/box_office_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="@dimen/small_detail_text"
+                tools:text="Сборы: 200 000 000 $ " />
+
+            <TextView
+                android:id="@+id/release_date_detail_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="@dimen/small_detail_text"
+                tools:text="Дата выхода: 01.01.1972" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/description_detail_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="@dimen/small_detail_text"
+        tools:text="@string/test_description" />
+
+</LinearLayout>

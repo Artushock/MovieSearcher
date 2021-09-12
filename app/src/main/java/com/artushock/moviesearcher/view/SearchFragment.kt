@@ -13,16 +13,12 @@ class SearchFragment : Fragment() {
     private var _binding: SearchFragmentBinding? = null
     private val binding get() = _binding!!
 
-    companion object {
-        fun newInstance() = SearchFragment()
-    }
-
     private lateinit var viewModel: SearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = SearchFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -30,7 +26,6 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

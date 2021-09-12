@@ -21,5 +21,5 @@ data class Movie(
     val mainActorsSet: ArrayList<String> = arrayListOf(),
     val fullActorsSet: ArrayList<String> = arrayListOf(),
     val releaseDate: Date = Date(),
-    val country: String = "Undefined country"
+    val country: String = "Country"
 ) : Parcelable

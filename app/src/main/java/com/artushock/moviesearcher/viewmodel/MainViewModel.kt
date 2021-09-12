@@ -18,19 +18,12 @@ class MainViewModel(
     private fun getList() {
         liveDataToObserve.value = MovieListState.Loading
         Thread {
-            Thread.sleep(2000)
-
+            Thread.sleep(1000)
             if (Random.nextBoolean()) {
-                if (Random.nextBoolean()) {
-                    liveDataToObserve.postValue(MovieListState.SuccessRemote(repository.getMovieListFromRemoteStorage()))
-                } else {
-                    liveDataToObserve.postValue(MovieListState.SuccessLocal(repository.getMovieListFromLocalStorage()))
-                }
+                liveDataToObserve.postValue(MovieListState.Success(repository.getMovieList()))
             } else {
                 liveDataToObserve.postValue(MovieListState.Error)
             }
         }.start()
     }
-
-
 }

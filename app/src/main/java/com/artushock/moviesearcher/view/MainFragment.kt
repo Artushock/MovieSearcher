@@ -16,13 +16,14 @@ import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MovieCategory
 import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.viewmodel.MainViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,46 +51,28 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, { render(it, view) })
+        viewModel.getLiveData().observe(viewLifecycleOwner, { render(it) })
         viewModel.getMovieList()
     }
 
 
-    private fun getDividerItemDecoration(): DividerItemDecoration {
-        val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
-        itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
-        return itemDecoration
-    }
-
-    private fun render(data: MovieListState, view: View) {
+    private fun render(data: MovieListState) {
         when (data) {
             is MovieListState.Loading -> {
                 binding.mainFragmentProgressBar.visibility = View.VISIBLE
             }
             is MovieListState.Error -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
-                Snackbar.make(view, "Error", Snackbar.LENGTH_LONG)
-                    .setAction("Reload") { viewModel.getMovieList() }
-                    .show()
             }
-            is MovieListState.SuccessLocal -> {
-                binding.mainFragmentProgressBar.visibility = View.GONE
-                val movies = data.movieList
-                showMainViewers(movies)
-                Toast.makeText(context, "Local data uploaded", Toast.LENGTH_SHORT).show()
-            }
-
-            is MovieListState.SuccessRemote -> {
-                binding.mainFragmentProgressBar.visibility = View.GONE
-                val movies = data.movieList
-                showMainViewers(movies)
-                Toast.makeText(context, "Remote data uploaded", Toast.LENGTH_SHORT).show()
+            is MovieListState.Success -> {
+                showMainViewers(data.movieList)
             }
         }
     }
 
     private fun showMainViewers(movies: ArrayList<Movie>) {
+        binding.mainFragmentProgressBar.visibility = View.GONE
+
         val popularRV: RecyclerView = binding.popularMoviesRecyclerView
         initRecyclerView(popularRV, movies, MovieCategory.POPULAR)
 
@@ -127,6 +110,12 @@ class MainFragment : Fragment() {
         rw.adapter = adapter
     }
 
+    private fun getDividerItemDecoration(): DividerItemDecoration {
+        val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
+        itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
+        return itemDecoration
+    }
+
 
     private fun getMoviesByCategory(
         movies: ArrayList<Movie>,
@@ -140,5 +129,4 @@ class MainFragment : Fragment() {
         }
         return result
     }
-
 }

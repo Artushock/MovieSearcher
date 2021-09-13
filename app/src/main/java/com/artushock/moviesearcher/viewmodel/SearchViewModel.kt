@@ -11,7 +11,7 @@ class SearchViewModel(
     private val repository: Repository = RepositoryImpl()
 ) : ViewModel(
 ) {
-    fun getLiveData() = liveDataToObserve
+   /* fun getLiveData() = liveDataToObserve
     fun getMovieList() = getList()
 
     private fun getList() {
@@ -28,5 +28,5 @@ class SearchViewModel(
             Thread.sleep(1000)
             liveDataToObserve.postValue(MovieListState.Success(repository.getMoviesByName(text)))
         }.start()
-    }
+    }*/
 }

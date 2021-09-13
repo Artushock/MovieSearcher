@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.MovieItemBinding
 import com.artushock.moviesearcher.model.Movie
+import com.artushock.moviesearcher.model.MoviesDTO
 
 
 class MoviesPreviewAdapter :
@@ -14,7 +15,7 @@ class MoviesPreviewAdapter :
 
     var movieItemClick : OnMovieItemClickListener? = null
 
-    var movieList: List<Movie> = listOf()
+    var movieList: List<MoviesDTO.MoviePreview> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -40,13 +41,12 @@ class MoviesPreviewAdapter :
         private val rating: TextView = binding.movieRateItem
         private val item: LinearLayout = binding.movieItemElement
 
-        fun bind(movie: Movie) {
-            name.text = movie.name
-            genre.text = movie.mainGenre.genreName
-            rating.text = movie.rating.toString()
-            item.setOnClickListener{
+        fun bind(movie: MoviesDTO.MoviePreview) {
+            name.text = movie.title
+            rating.text = movie.vote_average.toString()
+            /*item.setOnClickListener{
                 movieItemClick?.onMovieItemClick(movie)
-            }
+            }*/
         }
     }
 

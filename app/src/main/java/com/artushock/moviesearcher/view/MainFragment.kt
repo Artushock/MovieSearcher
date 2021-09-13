@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
-import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.MovieCategory
-import com.artushock.moviesearcher.model.MovieListState
+import com.artushock.moviesearcher.model.*
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -24,17 +22,6 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.main_options_menu, menu)
-        MenuCompat.setGroupDividerEnabled(menu, true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,15 +30,15 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, { render(it) })
         viewModel.getMovieList()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 
@@ -64,12 +51,12 @@ class MainFragment : Fragment() {
                 binding.mainFragmentProgressBar.visibility = View.GONE
             }
             is MovieListState.Success -> {
-                showMainViewers(data.movieList)
+                showMainViewers(data.moviesDTO)
             }
         }
     }
 
-    private fun showMainViewers(movies: ArrayList<Movie>) {
+    private fun showMainViewers(movies: MoviesDTO) {
         binding.mainFragmentProgressBar.visibility = View.GONE
 
         val popularRV: RecyclerView = binding.popularMoviesRecyclerView
@@ -81,8 +68,7 @@ class MainFragment : Fragment() {
 
     private fun initRecyclerView(
         rw: RecyclerView,
-        movies: ArrayList<Movie>,
-        moviesCategory: MovieCategory
+        movies: MoviesDTO,
     ) {
         rw.setHasFixedSize(true)
 
@@ -92,7 +78,7 @@ class MainFragment : Fragment() {
         rw.addItemDecoration(getDividerItemDecoration())
 
         val adapter = MoviesPreviewAdapter()
-        adapter.movieList = getMoviesByCategory(movies, moviesCategory)
+        adapter.movieList = movies.results
 
         adapter.movieItemClick = object : MoviesPreviewAdapter.OnMovieItemClickListener {
             override fun onMovieItemClick(movie: Movie) {
@@ -105,7 +91,6 @@ class MainFragment : Fragment() {
                 }
             }
         }
-
         rw.adapter = adapter
     }
 
@@ -113,19 +98,5 @@ class MainFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
         itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
         return itemDecoration
-    }
-
-
-    private fun getMoviesByCategory(
-        movies: ArrayList<Movie>,
-        category: MovieCategory
-    ): List<Movie> {
-        val result = ArrayList<Movie>()
-        for (movie in movies) {
-            if (movie.category == category) {
-                result.add(movie)
-            }
-        }
-        return result
     }
 }

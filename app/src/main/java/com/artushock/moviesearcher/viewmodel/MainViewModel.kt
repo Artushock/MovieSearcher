@@ -2,28 +2,39 @@ package com.artushock.moviesearcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.artushock.moviesearcher.model.MovieListState
-import com.artushock.moviesearcher.model.Repository
-import com.artushock.moviesearcher.model.RepositoryImpl
-import kotlin.random.Random
+import com.artushock.moviesearcher.model.*
 
 class MainViewModel(
     private val liveDataToObserve: MutableLiveData<MovieListState> = MutableLiveData<MovieListState>(),
-    private val repository: Repository = RepositoryImpl()
+    private val repository: RepositoryAPI = RepositoryApiImpl()
 ) : ViewModel() {
 
-    fun getLiveData() = liveDataToObserve
-    fun getMovieList() = getList()
-
-    private fun getList() {
-        liveDataToObserve.value = MovieListState.Loading
-        Thread {
-            Thread.sleep(1000)
-            if (Random.nextBoolean()) {
-                liveDataToObserve.postValue(MovieListState.Success(repository.getMovieList()))
-            } else {
-                liveDataToObserve.postValue(MovieListState.Error)
+    private val listener: MovieLoader.MoviesListener =
+        object : MovieLoader.MoviesListener {
+            override fun moviesLoaded(moviesDTO: MoviesDTO) {
+                liveDataToObserve.postValue(MovieListState.Success(moviesDTO))
             }
-        }.start()
+
+            override fun moviesFailed(e: Throwable) {
+                liveDataToObserve.postValue(MovieListState.Error(e))
+            }
+
+        }
+
+    fun getLiveData() = liveDataToObserve
+
+    fun getMovieList() {
+        liveDataToObserve.value = MovieListState.Loading
+
+        getNewMovieList()
+        getPopularMovieList()
+    }
+
+    private fun getPopularMovieList() {
+        repository.getNewMovies(listener)
+    }
+
+    private fun getNewMovieList() {
+        repository.getPopularMovies(listener)
     }
 }

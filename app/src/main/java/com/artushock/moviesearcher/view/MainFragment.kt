@@ -1,8 +1,10 @@
 package com.artushock.moviesearcher.view
 
 import android.os.Bundle
-import android.view.*
-import androidx.core.view.MenuCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -11,7 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
-import com.artushock.moviesearcher.model.*
+import com.artushock.moviesearcher.model.Movie
+import com.artushock.moviesearcher.model.MovieCategory
+import com.artushock.moviesearcher.model.MovieListState
+import com.artushock.moviesearcher.model.MoviesDTO
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -32,15 +37,15 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getLiveData().observe(viewLifecycleOwner, { render(it) })
-        viewModel.getMovieList()
+        viewModel.getMoviesLiveData().observe(viewLifecycleOwner, { render(it) })
+
+        viewModel.getData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
 
     private fun render(data: MovieListState) {
         when (data) {
@@ -49,21 +54,32 @@ class MainFragment : Fragment() {
             }
             is MovieListState.Error -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
+                view?.showSnackBar("Error ${data.e}", "Reload", {
+                    viewModel.getData()
+                })
             }
             is MovieListState.Success -> {
-                showMainViewers(data.moviesDTO)
+
+                when (data.movieCategory) {
+                    MovieCategory.NEW -> {
+                        val newMoviesRecyclerView: RecyclerView = binding.newMoviesRecyclerView
+                        displayMovieList(data.moviesDTO, newMoviesRecyclerView)
+                    }
+                    MovieCategory.POPULAR -> {
+                        val popularMoviesRecyclerView: RecyclerView =
+                            binding.popularMoviesRecyclerView
+                        displayMovieList(data.moviesDTO, popularMoviesRecyclerView)
+                    }
+                }
+
+
             }
         }
     }
 
-    private fun showMainViewers(movies: MoviesDTO) {
+    private fun displayMovieList(movies: MoviesDTO, recyclerView: RecyclerView) {
         binding.mainFragmentProgressBar.visibility = View.GONE
-
-        val popularRV: RecyclerView = binding.popularMoviesRecyclerView
-        initRecyclerView(popularRV, movies, MovieCategory.POPULAR)
-
-        val newRV: RecyclerView = binding.newMoviesRecyclerView
-        initRecyclerView(newRV, movies, MovieCategory.NEW)
+        initRecyclerView(recyclerView, movies)
     }
 
     private fun initRecyclerView(

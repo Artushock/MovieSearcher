@@ -11,7 +11,7 @@ data class Movie(
     val mainGenre: MovieGenre = MovieGenre.UNKNOWN,
     val containedGenreSet: ArrayList<MovieGenre> = arrayListOf(),
     val rating: Float = 0f,
-    val category: MovieCategory = MovieCategory.UNKNOWN,
+    //val category: MovieCategory = MovieCategory.UNKNOWN,
     val budget: Int = 0,
     val boxOffice: Int = 0,
     val revenue: Int = 0,

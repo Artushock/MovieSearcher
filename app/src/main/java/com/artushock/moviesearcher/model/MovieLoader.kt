@@ -15,14 +15,14 @@ import javax.net.ssl.HttpsURLConnection
 @RequiresApi(Build.VERSION_CODES.N)
 class MovieLoader(
     private val listener: MoviesListener,
-    private val movieType: MovieType
+    private val movieCategory: MovieCategory
 ) {
     private val tag = "[Art_MovieLoader]"
 
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun loadMovies() {
-        val uri = movieType.uri
+        val uri = movieCategory.uri
         Thread {
             goToTheInternet(uri)
         }.start()
@@ -45,7 +45,7 @@ class MovieLoader(
             Log.d(tag, "CONGRATULATIONS!!!! ${moviesDTO.results[1].id}")
 
             handler.post {
-                listener.moviesLoaded(moviesDTO)
+                listener.moviesLoaded(moviesDTO, movieCategory)
             }
         } catch (e: Exception) {
             Log.e(tag, "Fail connection", e)
@@ -56,13 +56,7 @@ class MovieLoader(
     }
 
     interface MoviesListener {
-        fun moviesLoaded(newMoviesDTO: MoviesDTO)
+        fun moviesLoaded(moviesDTO: MoviesDTO, movieCategory: MovieCategory)
         fun moviesFailed(e: Throwable)
     }
-
-    enum class MovieType(val uri: URL) {
-        NEW(URL("https://api.themoviedb.org/3/movie/now_playing?api_key=051e149465ccfab1113dcf96b1096d37&language=ru-RU&page=1&region=ru")),
-        POPULAR(URL("https://api.themoviedb.org/3/movie/popular?api_key=051e149465ccfab1113dcf96b1096d37&language=ru-RU&page=1"))
-    }
-
 }

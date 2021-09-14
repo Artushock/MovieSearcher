@@ -6,13 +6,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.SearchedMovieItemBinding
-import com.artushock.moviesearcher.model.Movie
+import com.artushock.moviesearcher.model.MoviesDTO
 
 class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHolder>() {
 
     var onSearchedItemClickListener: OnSearchedItemClickListener? = null
 
-    var movieList: List<Movie> = listOf()
+    var movieList: List<MoviesDTO.MoviePreview> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -37,19 +37,19 @@ class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHo
         private val rating: TextView = binding.ratingSearchItemRv
         private val item: LinearLayout = binding.searchItem
 
-        fun bind(movie: Movie) {
-            name.text = movie.name
-            releaseYear.text = movie.releaseDate.formatYear()
-            country.text = movie.country
-            rating.text = movie.rating.toString()
+        fun bind(movie: MoviesDTO.MoviePreview) {
+            name.text = movie.title
+            releaseYear.text = movie.release_date.substring(0, 4)
+            country.text = movie.original_language
+            rating.text = movie.vote_average.toString()
 
             item.setOnClickListener {
-                onSearchedItemClickListener?.onSearchedItemClick(movie)
+                onSearchedItemClickListener?.onSearchedItemClick(movie.title)
             }
         }
     }
 
     interface OnSearchedItemClickListener {
-        fun onSearchedItemClick(movie: Movie)
+        fun onSearchedItemClick(title: String)
     }
 }

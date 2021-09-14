@@ -17,5 +17,11 @@ class RepositoryApiImpl : RepositoryAPI {
         loader.loadMovies()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun getTopRatedMovies(listener: MovieListsLoader.MoviesListener) {
+        val loader = MovieListsLoader(listener, MovieCategory.TOP_RATED)
+        loader.loadMovies()
+    }
+
 
 }

@@ -9,11 +9,9 @@ class MoviesDTO(
 
     class MoviePreview(
         val id: Int,
-        val overview: String,
         val release_date: String,
+        val original_language: String,
         val title: String,
         val vote_average: Float,
-    ) {
-        //
-    }
+    )
 }

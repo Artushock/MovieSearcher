@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.MovieItemBinding
-import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MoviesDTO
 
 

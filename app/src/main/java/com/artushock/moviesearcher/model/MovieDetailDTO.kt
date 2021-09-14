@@ -13,7 +13,7 @@ class MovieDetailDTO(
     val original_language: String,
     val original_title: String,
     val overview: String,
-    //val production_companies: Array<ProductionCompany>,
+    val production_companies: @RawValue List<ProductionCompany>,
     val release_date: String,
     val revenue: Int,
     val runtime: Int,

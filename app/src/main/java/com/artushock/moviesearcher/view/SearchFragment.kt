@@ -1,18 +1,24 @@
 package com.artushock.moviesearcher.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.SearchFragmentBinding
+import com.artushock.moviesearcher.model.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieListState
+import com.artushock.moviesearcher.model.MovieLoaderByID
 import com.artushock.moviesearcher.viewmodel.SearchViewModel
 
 class SearchFragment : Fragment() {
@@ -43,9 +49,9 @@ class SearchFragment : Fragment() {
         val editText: EditText = binding.searchEditText
         val searchButton: Button = binding.searchButton
 
-        /*searchButton.setOnClickListener {
-            viewModel.findMovie(editText.text.toString())
-        }*/
+        searchButton.setOnClickListener {
+            //todo
+        }
     }
 
     private fun render(it: MovieListState?) {
@@ -53,26 +59,53 @@ class SearchFragment : Fragment() {
             is MovieListState.Loading -> {
                 binding.searchFragmentProgressBar.visibility = View.VISIBLE
             }
-
-            is MovieListState.Success -> {
-                binding.searchFragmentProgressBar.visibility = View.GONE
-
-                val searchRecyclerView: RecyclerView = binding.searchResultRecyclerView
-                searchRecyclerView.setHasFixedSize(true)
-                val layoutManager = LinearLayoutManager(context)
-                searchRecyclerView.layoutManager = layoutManager
-                val adapter = MovieSearchAdapter()
-
-                adapter.movieList = it.moviesDTO.results
-
-                searchRecyclerView.adapter = adapter
-            }
             is MovieListState.Error -> {
                 this.view?.showSnackBar(
                     getString(R.string.error),
                     getString(R.string.reload),
                     { viewModel.getPopularMovieList() })
             }
+            is MovieListState.Success -> {
+                binding.searchFragmentProgressBar.visibility = View.GONE
+
+                val searchRecyclerView: RecyclerView = binding.searchResultRecyclerView
+                val layoutManager = LinearLayoutManager(context)
+                val adapter = MovieSearchAdapter()
+
+                searchRecyclerView.setHasFixedSize(true)
+                searchRecyclerView.layoutManager = layoutManager
+                adapter.movieList = it.moviesDTO.results
+
+                adapter.onSearchedItemClickListener =
+                    object : MovieSearchAdapter.OnSearchedItemClickListener {
+                        @RequiresApi(Build.VERSION_CODES.N)
+                        override fun onSearchedItemClick(id: Int) {
+                            showDetailFragment(id)
+                        }
+
+                    }
+
+                searchRecyclerView.adapter = adapter
+            }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun showDetailFragment(id: Int) {
+        val movieDetailListener: MovieLoaderByID.MovieDetailListener =
+            object : MovieLoaderByID.MovieDetailListener {
+                override fun onMovieDetailListener(movieDetail: MovieDetailDTO) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(MOVIE_FOR_DETAIL, movieDetail)
+                    val navController = findNavController()
+                    navController.navigate(R.id.movieDetailFragment, bundle)
+                }
+
+                override fun onMovieDetailFailed(e: Throwable) {
+                    Toast.makeText(context, "Error: $e", Toast.LENGTH_SHORT).show()
+                }
+            }
+        val movieLoaderByID = MovieLoaderByID(id, movieDetailListener)
+        movieLoaderByID.loadMovie()
     }
 }

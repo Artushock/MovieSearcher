@@ -37,7 +37,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getMoviesLiveData().observe(viewLifecycleOwner, { render(it) })
-
         viewModel.getData()
     }
 

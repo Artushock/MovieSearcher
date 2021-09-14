@@ -43,12 +43,12 @@ class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHo
             country.text = movie.original_language
             rating.text = movie.vote_average.toString()
             item.setOnClickListener {
-                onSearchedItemClickListener?.onSearchedItemClick(movie.title)
+                onSearchedItemClickListener?.onSearchedItemClick(movie.id)
             }
         }
     }
 
     interface OnSearchedItemClickListener {
-        fun onSearchedItemClick(title: String)
+        fun onSearchedItemClick(id: Int)
     }
 }

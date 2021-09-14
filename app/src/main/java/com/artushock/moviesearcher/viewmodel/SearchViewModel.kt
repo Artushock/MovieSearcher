@@ -25,4 +25,8 @@ class SearchViewModel(
     fun getPopularMovieList() {
         repository.getPopularMovies(moviesListener)
     }
+
+    fun findMovie(string: String) {
+
+    }
 }

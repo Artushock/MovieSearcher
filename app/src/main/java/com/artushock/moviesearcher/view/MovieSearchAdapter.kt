@@ -42,7 +42,6 @@ class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHo
             releaseYear.text = movie.release_date.substring(0, 4)
             country.text = movie.original_language
             rating.text = movie.vote_average.toString()
-
             item.setOnClickListener {
                 onSearchedItemClickListener?.onSearchedItemClick(movie.title)
             }

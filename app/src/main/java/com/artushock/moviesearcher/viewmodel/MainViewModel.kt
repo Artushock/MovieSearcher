@@ -15,7 +15,7 @@ class MainViewModel(
                 moviesToObserve.postValue(MovieListState.Success(moviesDTO, movieCategory))
             }
 
-            override fun moviesFailed(e: Throwable) {
+            override fun moviesLoadingFailed(e: Throwable) {
                 moviesToObserve.postValue(MovieListState.Error(e))
             }
         }

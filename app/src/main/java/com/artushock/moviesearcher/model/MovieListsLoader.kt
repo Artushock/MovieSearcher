@@ -3,7 +3,6 @@ package com.artushock.moviesearcher.model
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -42,7 +41,7 @@ class MovieListsLoader(
                 listener.moviesLoaded(moviesDTO, movieCategory)
             }
         } catch (e: Exception) {
-            listener.moviesFailed(e)
+            listener.moviesLoadingFailed(e)
         } finally {
             urlConnection?.disconnect()
         }
@@ -50,6 +49,6 @@ class MovieListsLoader(
 
     interface MoviesListener {
         fun moviesLoaded(moviesDTO: MoviesDTO, movieCategory: MovieCategory)
-        fun moviesFailed(e: Throwable)
+        fun moviesLoadingFailed(e: Throwable)
     }
 }

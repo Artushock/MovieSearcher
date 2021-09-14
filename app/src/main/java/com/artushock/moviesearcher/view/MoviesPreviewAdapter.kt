@@ -1,9 +1,11 @@
 package com.artushock.moviesearcher.view
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.MovieItemBinding
 import com.artushock.moviesearcher.model.MoviesDTO
@@ -25,6 +27,7 @@ class MoviesPreviewAdapter :
             MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: MoviesPreviewViewHolder, position: Int) {
         holder.bind(movieList[position])
     }
@@ -40,6 +43,7 @@ class MoviesPreviewAdapter :
         private val rating: TextView = binding.movieRateItem
         private val item: LinearLayout = binding.movieItemElement
 
+        @RequiresApi(Build.VERSION_CODES.N)
         fun bind(movie: MoviesDTO.MoviePreview) {
             name.text = movie.title
             rating.text = movie.vote_average.toString()

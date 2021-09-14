@@ -15,7 +15,7 @@ class SearchViewModel(
                 moviesToObserve.postValue(MovieListState.Success(moviesDTO, movieCategory))
             }
 
-            override fun moviesFailed(e: Throwable) {
+            override fun moviesLoadingFailed(e: Throwable) {
                 moviesToObserve.postValue(MovieListState.Error(e))
             }
         }
@@ -24,5 +24,9 @@ class SearchViewModel(
 
     fun getPopularMovieList() {
         repository.getPopularMovies(moviesListener)
+    }
+
+    fun findMovie(string: String) {
+
     }
 }

@@ -1,9 +1,12 @@
 package com.artushock.moviesearcher.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,10 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
-import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.MovieCategory
-import com.artushock.moviesearcher.model.MovieListState
-import com.artushock.moviesearcher.model.MoviesDTO
+import com.artushock.moviesearcher.model.*
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -70,8 +70,6 @@ class MainFragment : Fragment() {
                         displayMovieList(data.moviesDTO, popularMoviesRecyclerView)
                     }
                 }
-
-
             }
         }
     }
@@ -96,17 +94,32 @@ class MainFragment : Fragment() {
         adapter.movieList = movies.results
 
         adapter.movieItemClick = object : MoviesPreviewAdapter.OnMovieItemClickListener {
-            override fun onMovieItemClick(movie: Movie) {
-                val manager = activity?.supportFragmentManager
-                if (manager != null) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(MOVIE_FOR_DETAIL, movie)
-                    val navController = findNavController()
-                    navController.navigate(R.id.movieDetailFragment, bundle)
-                }
+
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onMovieItemClick(movieID: Int) {
+                showDetailFragment(movieID)
             }
         }
         rw.adapter = adapter
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun showDetailFragment(movieID: Int) {
+        val movieDetailListener: MovieLoaderByID.MovieDetailListener =
+            object : MovieLoaderByID.MovieDetailListener {
+                override fun onMovieDetailListener(movieDetail: MovieDetailDTO) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(MOVIE_FOR_DETAIL, movieDetail)
+                    val navController = findNavController()
+                    navController.navigate(R.id.movieDetailFragment, bundle)
+                }
+
+                override fun onMovieDetailFailed(e: Throwable) {
+                    Toast.makeText(context, "Error: $e", Toast.LENGTH_SHORT).show()
+                }
+            }
+        val movieLoaderByID = MovieLoaderByID(movieID, movieDetailListener)
+        movieLoaderByID.loadMovie()
     }
 
     private fun getDividerItemDecoration(): DividerItemDecoration {

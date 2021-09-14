@@ -13,7 +13,7 @@ import com.artushock.moviesearcher.model.MoviesDTO
 class MoviesPreviewAdapter :
     RecyclerView.Adapter<MoviesPreviewAdapter.MoviesPreviewViewHolder>() {
 
-    var movieItemClick : OnMovieItemClickListener? = null
+    var movieItemClick: OnMovieItemClickListener? = null
 
     var movieList: List<MoviesDTO.MoviePreview> = listOf()
         set(value) {
@@ -44,13 +44,13 @@ class MoviesPreviewAdapter :
         fun bind(movie: MoviesDTO.MoviePreview) {
             name.text = movie.title
             rating.text = movie.vote_average.toString()
-            /*item.setOnClickListener{
-                movieItemClick?.onMovieItemClick(movie)
-            }*/
+            item.setOnClickListener {
+                movieItemClick?.onMovieItemClick(movie.id)
+            }
         }
     }
 
     interface OnMovieItemClickListener {
-        fun onMovieItemClick(movie: Movie)
+        fun onMovieItemClick(movieID: Int)
     }
 }

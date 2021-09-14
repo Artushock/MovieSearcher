@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import com.artushock.moviesearcher.BuildConfig
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -18,7 +19,7 @@ class MovieLoaderByID(
     @RequiresApi(Build.VERSION_CODES.N)
     fun loadMovie() {
         val uri =
-            URL("https://api.themoviedb.org/3/movie/$id?api_key=051e149465ccfab1113dcf96b1096d37&language=ru-RU")
+            URL("https://api.themoviedb.org/3/movie/$id?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU")
         Thread {
             goToTheInternet(uri)
         }.start()

@@ -1,6 +1,6 @@
 package com.artushock.moviesearcher.model
 
 interface RepositoryAPI {
-    fun getNewMovies(listener: MovieLoader.MoviesListener)
-    fun getPopularMovies(listener: MovieLoader.MoviesListener)
+    fun getNewMovies(listener: MovieListsLoader.MoviesListener)
+    fun getPopularMovies(listener: MovieListsLoader.MoviesListener)
 }

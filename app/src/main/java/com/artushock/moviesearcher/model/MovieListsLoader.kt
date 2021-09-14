@@ -13,12 +13,10 @@ import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 @RequiresApi(Build.VERSION_CODES.N)
-class MovieLoader(
+class MovieListsLoader(
     private val listener: MoviesListener,
     private val movieCategory: MovieCategory
 ) {
-    private val tag = "[Art_MovieLoader]"
-
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun loadMovies() {
@@ -38,17 +36,12 @@ class MovieLoader(
 
             val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
             val result = reader.lines().collect(Collectors.joining("\n"))
-
-
             val moviesDTO: MoviesDTO = Gson().fromJson(result, MoviesDTO::class.java)
-
-            Log.d(tag, "CONGRATULATIONS!!!! ${moviesDTO.results[1].id}")
 
             handler.post {
                 listener.moviesLoaded(moviesDTO, movieCategory)
             }
         } catch (e: Exception) {
-            Log.e(tag, "Fail connection", e)
             listener.moviesFailed(e)
         } finally {
             urlConnection?.disconnect()

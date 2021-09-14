@@ -9,8 +9,8 @@ class MainViewModel(
     private val repository: RepositoryAPI = RepositoryApiImpl()
 ) : ViewModel() {
 
-    private val moviesListener: MovieLoader.MoviesListener =
-        object : MovieLoader.MoviesListener {
+    private val moviesListener: MovieListsLoader.MoviesListener =
+        object : MovieListsLoader.MoviesListener {
             override fun moviesLoaded(moviesDTO: MoviesDTO, movieCategory: MovieCategory) {
                 moviesToObserve.postValue(MovieListState.Success(moviesDTO, movieCategory))
             }

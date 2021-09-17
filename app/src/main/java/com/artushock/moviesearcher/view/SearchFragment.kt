@@ -96,7 +96,7 @@ class SearchFragment : Fragment() {
             object : MovieLoaderByID.MovieDetailListener {
                 override fun onMovieDetailListener(movieDetail: MovieDetailDTO) {
                     val bundle = Bundle()
-                    bundle.putParcelable(MOVIE_FOR_DETAIL, movieDetail)
+                    bundle.putParcelable(MOVIE_ID, movieDetail)
                     val navController = findNavController()
                     navController.navigate(R.id.movieDetailFragment, bundle)
                 }

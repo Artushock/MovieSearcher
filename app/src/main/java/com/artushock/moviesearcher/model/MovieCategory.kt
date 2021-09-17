@@ -1,8 +1,11 @@
 package com.artushock.moviesearcher.model
 
-enum class MovieCategory (categoryName: String) {
-    NEW ("New"),
-    POPULAR ("Popular"),
-    SEEN_NOW ("Seen now"),
-    UNKNOWN ("Unknown")
+import com.artushock.moviesearcher.BuildConfig
+import java.net.URL
+
+enum class MovieCategory(val uri: URL) {
+    TOP_RATED(URL("https://api.themoviedb.org/3/movie/top_rated?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU&page=1")),
+    NEW(URL("https://api.themoviedb.org/3/movie/now_playing?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU&page=1&region=ru")),
+    POPULAR(URL("https://api.themoviedb.org/3/movie/popular?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU&page=1"))
 }
+

@@ -33,8 +33,7 @@ class MovieDetailFragment : Fragment() {
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
-    val movieID: Int = -1
-    val loadResultReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private val loadResultReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.getStringExtra(DETAILS_LOAD_RESULT_EXTRA)) {
                 DETAILS_RESPONSE_SUCCESS_EXTRA -> {
@@ -65,6 +64,8 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun renderData(movie: MovieDetailDTO?) {
+        binding.detailFragmentProgressBar.visibility = View.GONE
+        
         with(binding) {
             movie?.let { movie ->
                 movieNameDetailTv.text = movie.title
@@ -105,6 +106,8 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun getMovieById() {
+        binding.detailFragmentProgressBar.visibility = View.VISIBLE
+
         val id = arguments?.getInt(MOVIE_ID) ?: -1
         context?.startService(Intent(context, MovieDetailService::class.java).apply {
             putExtra(

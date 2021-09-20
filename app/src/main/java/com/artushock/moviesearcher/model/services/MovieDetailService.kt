@@ -3,23 +3,15 @@ package com.artushock.moviesearcher.model.services
 import android.app.IntentService
 import android.content.Intent
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artushock.moviesearcher.BuildConfig
 import com.artushock.moviesearcher.model.MovieDetailDTO
 import com.artushock.moviesearcher.view.*
 import com.google.gson.Gson
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
-import java.util.stream.Collectors
-import javax.net.ssl.HttpsURLConnection
+import okhttp3.*
+import java.io.IOException
 
-private const val REQUEST_GET = "GET"
-private const val REQUEST_TIMEOUT = 10000
 const val MOVIE_ID_EXTRA = "MOVIE_ID_EXTRA"
 
 class MovieDetailService(val name: String = "MovieDetailService") : IntentService(name) {
@@ -40,31 +32,25 @@ class MovieDetailService(val name: String = "MovieDetailService") : IntentServic
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun loadMovieDetail(id: Int) {
-        try {
-            val uri =
-                URL("https://api.themoviedb.org/3/movie/$id?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU")
 
-            var urlConnection: HttpsURLConnection? = null
-            try {
-                urlConnection = uri.openConnection() as HttpsURLConnection
-                urlConnection.apply {
-                    requestMethod = REQUEST_GET
-                    readTimeout = REQUEST_TIMEOUT
-                }
+        val client = OkHttpClient()
+        val builder: Request.Builder = Request.Builder()
+        builder.url("https://api.themoviedb.org/3/movie/$id?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU")
+        val request = builder.build()
+        val call: Call = client.newCall(request)
 
-                val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
-                val result = reader.lines().collect(Collectors.joining("\n"))
-
-                val detail: MovieDetailDTO = Gson().fromJson(result, MovieDetailDTO::class.java)
-                onResponse(detail)
-            } catch (e: Exception) {
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
                 onErrorRequest(e.message ?: "Empty error")
-            } finally {
-                urlConnection?.disconnect()
             }
-        } catch (e: Exception) {
-            onMalformedURL()
-        }
+
+            override fun onResponse(call: Call, response: Response) {
+                val serverResponse: String? = response.body()?.string()
+                val detail: MovieDetailDTO =
+                    Gson().fromJson(serverResponse, MovieDetailDTO::class.java)
+                onResponse(detail)
+            }
+        })
     }
 
     private fun onResponse(movieDetail: MovieDetailDTO) {

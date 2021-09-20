@@ -4,12 +4,11 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import com.artushock.moviesearcher.model.repositories.RemoteDataSource
 import com.google.gson.Gson
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import okhttp3.*
+import java.io.IOException
 import java.net.URL
-import java.util.stream.Collectors
-import javax.net.ssl.HttpsURLConnection
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MovieListsLoader(
@@ -27,24 +26,23 @@ class MovieListsLoader(
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun goToTheInternet(uri: URL) {
-        var urlConnection: HttpsURLConnection? = null
-        val handler = Handler(Looper.getMainLooper())
-        try {
-            urlConnection = uri.openConnection() as HttpsURLConnection
-            urlConnection.requestMethod = "GET"
 
-            val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
-            val result = reader.lines().collect(Collectors.joining("\n"))
-            val moviesDTO: MoviesDTO = Gson().fromJson(result, MoviesDTO::class.java)
-
-            handler.post {
-                listener.moviesLoaded(moviesDTO, movieCategory)
+        val callback = object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                listener.moviesLoadingFailed(e)
             }
-        } catch (e: Exception) {
-            listener.moviesLoadingFailed(e)
-        } finally {
-            urlConnection?.disconnect()
+
+            override fun onResponse(call: Call, response: Response) {
+                val handler = Handler(Looper.getMainLooper())
+                val result: String? = response.body()?.string()
+                val moviesDTO: MoviesDTO = Gson().fromJson(result, MoviesDTO::class.java)
+
+                handler.post {
+                    listener.moviesLoaded(moviesDTO, movieCategory)
+                }
+            }
         }
+        RemoteDataSource().getRemoteData(uri.toString(), callback)
     }
 
     interface MoviesListener {

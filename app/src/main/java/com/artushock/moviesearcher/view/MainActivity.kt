@@ -10,12 +10,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.ActivityMainBinding
-import com.artushock.moviesearcher.model.receiver.ConnectivityActionReceiver
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-
-    private val receiver = ConnectivityActionReceiver()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -25,8 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

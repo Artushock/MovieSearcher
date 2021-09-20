@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -104,21 +103,10 @@ class MainFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun showDetailFragment(movieID: Int) {
-        val movieDetailListener: MovieLoaderByID.MovieDetailListener =
-            object : MovieLoaderByID.MovieDetailListener {
-                override fun onMovieDetailListener(movieDetail: MovieDetailDTO) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(MOVIE_FOR_DETAIL, movieDetail)
-                    val navController = findNavController()
-                    navController.navigate(R.id.movieDetailFragment, bundle)
-                }
-
-                override fun onMovieDetailFailed(e: Throwable) {
-                    Toast.makeText(context, "Error: $e", Toast.LENGTH_SHORT).show()
-                }
-            }
-        val movieLoaderByID = MovieLoaderByID(movieID, movieDetailListener)
-        movieLoaderByID.loadMovie()
+        val bundle = Bundle()
+        bundle.putInt(MOVIE_ID, movieID)
+        val navController = findNavController()
+        navController.navigate(R.id.movieDetailFragment, bundle)
     }
 
     private fun getDividerItemDecoration(): DividerItemDecoration {

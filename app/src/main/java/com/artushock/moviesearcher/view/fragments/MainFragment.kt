@@ -9,14 +9,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
-import com.artushock.moviesearcher.model.*
+import com.artushock.moviesearcher.model.MovieCategory
+import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.dto.MoviesDTO
-import com.artushock.moviesearcher.view.fragments.MOVIE_ID
 import com.artushock.moviesearcher.view.adapters.MoviesPreviewAdapter
 import com.artushock.moviesearcher.view.showSnackBar
 import com.artushock.moviesearcher.viewmodel.MainViewModel
@@ -39,8 +38,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMoviesLiveData().observe(viewLifecycleOwner, { render(it) })
-        viewModel.getData()
+        viewModel.popularMoviesToObserve.observe(viewLifecycleOwner, { render(it) })
+        viewModel.nowPlayingMoviesToObserve.observe(viewLifecycleOwner, { render(it) })
+        viewModel.topRatedMoviesToObserve.observe(viewLifecycleOwner, { render(it) })
+        viewModel.getMovies()
     }
 
     override fun onDestroy() {
@@ -56,20 +57,19 @@ class MainFragment : Fragment() {
             is MovieListState.Error -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
                 view?.showSnackBar("Error ${data.e}", "Reload", {
-                    viewModel.getData()
+                    viewModel.getMovies()
                 })
             }
             is MovieListState.Success -> {
-
                 when (data.movieCategory) {
                     MovieCategory.NOW_PLAYING -> {
-                        val newMoviesRecyclerView: RecyclerView = binding.newMoviesRecyclerView
-                        displayMovieList(data.moviesDTO, newMoviesRecyclerView)
+                        displayMovieList(data.moviesDTO, binding.newMoviesRecyclerView)
                     }
                     MovieCategory.POPULAR -> {
-                        val popularMoviesRecyclerView: RecyclerView =
-                            binding.popularMoviesRecyclerView
-                        displayMovieList(data.moviesDTO, popularMoviesRecyclerView)
+                        displayMovieList(data.moviesDTO, binding.popularMoviesRecyclerView)
+                    }
+                    MovieCategory.TOP_RATED -> {
+                        displayMovieList(data.moviesDTO, binding.topRatedMoviesRecyclerView)
                     }
                 }
             }
@@ -83,14 +83,13 @@ class MainFragment : Fragment() {
 
     private fun initRecyclerView(
         rw: RecyclerView,
-        movies: MoviesDTO,
+        movies: MoviesDTO
     ) {
         rw.setHasFixedSize(true)
 
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         rw.layoutManager = linearLayoutManager
-        rw.addItemDecoration(getDividerItemDecoration())
 
         val adapter = MoviesPreviewAdapter()
         adapter.movieList = movies.results
@@ -111,11 +110,5 @@ class MainFragment : Fragment() {
         bundle.putInt(MOVIE_ID, movieID)
         val navController = findNavController()
         navController.navigate(R.id.movieDetailFragment, bundle)
-    }
-
-    private fun getDividerItemDecoration(): DividerItemDecoration {
-        val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
-        itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
-        return itemDecoration
     }
 }

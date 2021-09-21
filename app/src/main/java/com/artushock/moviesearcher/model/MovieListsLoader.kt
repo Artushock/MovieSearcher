@@ -21,7 +21,6 @@ class MovieListsLoader(
         goToTheInternet(movieCategory)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun goToTheInternet(movieCategory: MovieCategory) {
 
         val callback = object : Callback<MoviesDTO>{

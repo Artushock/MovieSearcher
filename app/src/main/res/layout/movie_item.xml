@@ -5,7 +5,8 @@
     android:id="@+id/movie_item_element"
     android:layout_width="150dp"
     android:layout_height="250dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginEnd="10dp">
 
     <FrameLayout
         android:id="@+id/movie_image_item"
@@ -23,11 +24,12 @@
             android:src="@drawable/empty" />
 
         <ImageButton
-            android:layout_width="24dp"
+            android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:background="@null"
             android:contentDescription="@string/bookmark_image_content_description"
             android:src="@drawable/ic_baseline_turned_in_not_24" />
 

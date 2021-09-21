@@ -1,9 +1,11 @@
 package com.artushock.moviesearcher.model.repositories
 
 import com.artushock.moviesearcher.model.MovieListsLoader
+import com.artushock.moviesearcher.model.dto.MoviesDTO
+import retrofit2.Callback
 
 interface RepositoryMovies {
-    fun getNewMovies(listener: MovieListsLoader.MoviesListener)
-    fun getPopularMovies(listener: MovieListsLoader.MoviesListener)
-    fun getTopRatedMovies(listener: MovieListsLoader.MoviesListener)
+    fun getNowPlayingMovies(page: Int, callback: Callback<MoviesDTO>)
+    fun getPopularMovies(page: Int, callback: Callback<MoviesDTO>)
+    fun getTopRatedMovies(page: Int, callback: Callback<MoviesDTO>)
 }

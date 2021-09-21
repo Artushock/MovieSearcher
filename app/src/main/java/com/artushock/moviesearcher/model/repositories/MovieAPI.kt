@@ -1,5 +1,6 @@
 package com.artushock.moviesearcher.model.repositories
 
+import com.artushock.moviesearcher.model.dto.GenresDTO
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import retrofit2.Call
@@ -35,4 +36,10 @@ interface MovieAPI {
         @Query("language") language: String,
         @Query("page") page: Int
     ): Call<MoviesDTO>
+
+    @GET("3/genre/movie/list?")
+    fun getGenres(
+        @Query("api_key") api_key: String,
+        @Query("language") language: String,
+    ): Call<GenresDTO>
 }

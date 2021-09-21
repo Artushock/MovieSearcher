@@ -1,6 +1,7 @@
 package com.artushock.moviesearcher.model.repositories
 
 import com.artushock.moviesearcher.BuildConfig
+import com.artushock.moviesearcher.model.dto.GenresDTO
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.google.gson.GsonBuilder
@@ -33,5 +34,9 @@ class RemoteDataSource {
 
     fun getPopularMoviesDataFromServer(page: Int, callback: Callback<MoviesDTO>) {
         movieApi.getPopularMovies(BuildConfig.THEMOVIEDB_API_KEY, "ru-RU", page).enqueue(callback)
+    }
+
+    fun getGenres(callback: Callback<GenresDTO>) {
+        movieApi.getGenres(BuildConfig.THEMOVIEDB_API_KEY, "ru-RU").enqueue(callback)
     }
 }

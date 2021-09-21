@@ -1,29 +1,23 @@
 package com.artushock.moviesearcher.model.repositories
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.artushock.moviesearcher.model.MovieCategory
-import com.artushock.moviesearcher.model.MovieListsLoader
+import com.artushock.moviesearcher.model.dto.GenresDTO
+import com.artushock.moviesearcher.model.dto.MoviesDTO
+import retrofit2.Callback
 
-class RepositoryMoviesImpl : RepositoryMovies {
+class RepositoryMoviesImpl(
+    private val remoteDataSource: RemoteDataSource
+) : RepositoryMovies {
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun getNewMovies(listener: MovieListsLoader.MoviesListener) {
-        val loader = MovieListsLoader(listener, MovieCategory.NOW_PLAYING)
-        loader.loadMovies()
+    override fun getNowPlayingMovies(page: Int, callback: Callback<MoviesDTO>) {
+        remoteDataSource.getNowPlayingMoviesDataFromServer(page, callback)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun getPopularMovies(listener: MovieListsLoader.MoviesListener) {
-        val loader = MovieListsLoader(listener, MovieCategory.POPULAR)
-        loader.loadMovies()
+    override fun getPopularMovies(page: Int, callback: Callback<MoviesDTO>) {
+        remoteDataSource.getPopularMoviesDataFromServer(page, callback)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun getTopRatedMovies(listener: MovieListsLoader.MoviesListener) {
-        val loader = MovieListsLoader(listener, MovieCategory.TOP_RATED)
-        loader.loadMovies()
+    override fun getTopRatedMovies(page: Int, callback: Callback<MoviesDTO>) {
+        remoteDataSource.getTopRatedMoviesDataFromServer(page, callback)
     }
-
 
 }

@@ -42,8 +42,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getMoviesLiveData().observe(viewLifecycleOwner, { render(it) })
-        viewModel.getPopularMovieList()
+        viewModel.topRatedMoviesToObserve.observe(viewLifecycleOwner, { render(it) })
+        viewModel.getTopRatedMovies()
 
         initSearch(viewModel)
     }
@@ -66,7 +66,7 @@ class SearchFragment : Fragment() {
                 this.view?.showSnackBar(
                     getString(R.string.error),
                     getString(R.string.reload),
-                    { viewModel.getPopularMovieList() })
+                    { viewModel.getTopRatedMovies() })
             }
             is MovieListState.Success -> {
                 binding.searchFragmentProgressBar.visibility = View.GONE

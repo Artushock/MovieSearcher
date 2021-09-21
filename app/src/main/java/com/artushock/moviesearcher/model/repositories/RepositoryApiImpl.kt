@@ -1,13 +1,15 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.model.repositories
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.artushock.moviesearcher.model.MovieCategory
+import com.artushock.moviesearcher.model.MovieListsLoader
 
-class RepositoryApiImpl : RepositoryAPI {
+class RepositoryApiImpl : RepositoryMovies {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun getNewMovies(listener: MovieListsLoader.MoviesListener) {
-        val loader = MovieListsLoader(listener, MovieCategory.NEW)
+        val loader = MovieListsLoader(listener, MovieCategory.NOW_PLAYING)
         loader.loadMovies()
     }
 

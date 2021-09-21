@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.artushock.moviesearcher.BuildConfig
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
 import com.artushock.moviesearcher.model.MovieDetailDTO
@@ -35,13 +34,11 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id = arguments?.getInt(MOVIE_ID) ?: -1
+        val movieId = arguments?.getInt(MOVIE_ID) ?: -1
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        if (id != -1) {
-            viewModel.getDetailLiveDataFromServer(
-                "https://api.themoviedb.org/3/movie/$id?api_key=${BuildConfig.THEMOVIEDB_API_KEY}&language=ru-RU"
-            )
+        viewModel.movieDetailLiveData.observe(viewLifecycleOwner, { renderData(it) })
+        if (movieId != -1) {
+            viewModel.getDetailLiveDataFromServer(movieId)
         }
     }
 

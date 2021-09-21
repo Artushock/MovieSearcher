@@ -1,12 +1,13 @@
 package com.artushock.moviesearcher.model.repositories
 
-import okhttp3.Callback
+import com.artushock.moviesearcher.model.MovieDetailDTO
+import retrofit2.Callback
 
 class RepositoryMovieDetailImpl(
-    val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource
 ) : RepositoryMovieDetail {
-
-    override fun getMovieDataFromServer(uri: String, callback: Callback) {
-        remoteDataSource.getRemoteData(uri, callback)
+    override fun getMovieDataFromServer(id: Int, callback: Callback<MovieDetailDTO>) {
+        remoteDataSource.getMovieDetailDataFromServer(id, callback)
     }
+
 }

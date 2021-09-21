@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
             is MovieListState.Success -> {
 
                 when (data.movieCategory) {
-                    MovieCategory.NEW -> {
+                    MovieCategory.NOW_PLAYING -> {
                         val newMoviesRecyclerView: RecyclerView = binding.newMoviesRecyclerView
                         displayMovieList(data.moviesDTO, newMoviesRecyclerView)
                     }

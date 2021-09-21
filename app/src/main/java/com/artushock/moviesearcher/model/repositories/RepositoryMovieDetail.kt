@@ -1,7 +1,11 @@
 package com.artushock.moviesearcher.model.repositories
 
-import okhttp3.Callback
+import com.artushock.moviesearcher.model.MovieDetailDTO
+import retrofit2.Callback
 
 interface RepositoryMovieDetail {
-    fun getMovieDataFromServer(uri: String, callback: Callback)
+    fun getMovieDataFromServer(
+        id: Int,
+        callback: Callback<MovieDetailDTO>
+    )
 }

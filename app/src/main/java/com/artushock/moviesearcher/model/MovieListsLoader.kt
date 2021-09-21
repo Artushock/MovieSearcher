@@ -5,10 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
 import com.artushock.moviesearcher.model.repositories.RemoteDataSource
-import com.google.gson.Gson
-import okhttp3.*
-import java.io.IOException
-import java.net.URL
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @RequiresApi(Build.VERSION_CODES.N)
 class MovieListsLoader(
@@ -18,31 +17,38 @@ class MovieListsLoader(
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun loadMovies() {
-        val uri = movieCategory.uri
-        Thread {
-            goToTheInternet(uri)
-        }.start()
+        goToTheInternet(movieCategory)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun goToTheInternet(uri: URL) {
+    private fun goToTheInternet(movieCategory: MovieCategory) {
 
-        val callback = object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                listener.moviesLoadingFailed(e)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
+        val callback = object : Callback<MoviesDTO>{
+            override fun onResponse(call: Call<MoviesDTO>, response: Response<MoviesDTO>) {
                 val handler = Handler(Looper.getMainLooper())
-                val result: String? = response.body()?.string()
-                val moviesDTO: MoviesDTO = Gson().fromJson(result, MoviesDTO::class.java)
+                val moviesDTO: MoviesDTO? = response.body()
 
                 handler.post {
-                    listener.moviesLoaded(moviesDTO, movieCategory)
+                    moviesDTO?.let { listener.moviesLoaded(it, movieCategory) }
                 }
             }
+
+            override fun onFailure(call: Call<MoviesDTO>, t: Throwable) {
+                listener.moviesLoadingFailed(t)
+            }
+
         }
-        RemoteDataSource().getRemoteData(uri.toString(), callback)
+        when (movieCategory){
+            MovieCategory.NOW_PLAYING -> {
+                RemoteDataSource().getNowPlayingMoviesDataFromServer(1, callback)
+            }
+            MovieCategory.TOP_RATED -> {
+                RemoteDataSource().getTopRatedMoviesDataFromServer(1, callback)
+            }
+            MovieCategory.POPULAR -> {
+                RemoteDataSource().getPopularMoviesDataFromServer(1, callback)
+            }
+        }
     }
 
     interface MoviesListener {

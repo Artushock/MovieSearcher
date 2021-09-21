@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.view
+package com.artushock.moviesearcher.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

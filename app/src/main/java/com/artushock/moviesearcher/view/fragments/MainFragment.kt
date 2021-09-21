@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.view
+package com.artushock.moviesearcher.view.fragments
 
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +16,9 @@ import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.*
 import com.artushock.moviesearcher.model.dto.MoviesDTO
+import com.artushock.moviesearcher.view.fragments.MOVIE_ID
+import com.artushock.moviesearcher.view.adapters.MoviesPreviewAdapter
+import com.artushock.moviesearcher.view.showSnackBar
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {

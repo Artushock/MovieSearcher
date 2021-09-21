@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.view
+package com.artushock.moviesearcher.view.adapters
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
 import com.artushock.moviesearcher.databinding.MovieItemBinding
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.squareup.picasso.Picasso

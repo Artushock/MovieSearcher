@@ -14,5 +14,6 @@ class MoviesDTO(
         val genre_ids: List<Int>,
         val title: String,
         val vote_average: Float,
+        val poster_path: String
     )
 }

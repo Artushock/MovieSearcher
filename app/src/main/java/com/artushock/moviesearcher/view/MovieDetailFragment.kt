@@ -12,6 +12,7 @@ import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
+import com.squareup.picasso.Picasso
 import java.util.*
 
 const val MOVIE_ID = "MOVIE_FOR_DETAIL"
@@ -75,6 +76,10 @@ class MovieDetailFragment : Fragment() {
                 boxOfficeDetailTv.text = getString(R.string.box_office_format, movie.revenue)
                 releaseDateDetailTv.text = movie.release_date
                 descriptionDetailTv.text = movie.overview
+                Picasso
+                    .get()
+                    .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
+                    .into(posterPathImage)
             }
         }
     }

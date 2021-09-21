@@ -18,7 +18,8 @@ class MovieDetailDTO(
     val revenue: Int,
     val runtime: Int,
     val title: String,
-    val vote_average: Double
+    val vote_average: Double,
+    val poster_path: String
 ) : Parcelable {
     inner class Genre(
         val id: Int,

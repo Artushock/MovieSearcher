@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_item_element"
-    android:layout_width="160dp"
-    android:layout_height="240dp"
+    android:layout_width="150dp"
+    android:layout_height="250dp"
     android:orientation="vertical">
 
     <FrameLayout
@@ -14,7 +14,7 @@
         android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/movie_item_note"
+            android:id="@+id/movie_item_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#CACACA"

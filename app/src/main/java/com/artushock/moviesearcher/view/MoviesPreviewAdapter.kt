@@ -3,12 +3,15 @@ package com.artushock.moviesearcher.view
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.artushock.moviesearcher.databinding.MovieItemBinding
 import com.artushock.moviesearcher.model.dto.MoviesDTO
+import com.squareup.picasso.Picasso
 
 
 class MoviesPreviewAdapter :
@@ -42,6 +45,7 @@ class MoviesPreviewAdapter :
         private val genre: TextView = binding.movieGenreItem
         private val rating: TextView = binding.movieRateItem
         private val item: LinearLayout = binding.movieItemElement
+        private val poster: ImageView = binding.movieItemPoster
 
         @RequiresApi(Build.VERSION_CODES.N)
         fun bind(movie: MoviesDTO.MoviePreview) {
@@ -50,6 +54,11 @@ class MoviesPreviewAdapter :
             item.setOnClickListener {
                 movieItemClick?.onMovieItemClick(movie.id)
             }
+            Picasso
+                .get()
+                .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
+                .fit()
+                .into(poster)
         }
     }
 

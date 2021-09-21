@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.SearchedMovieItemBinding
-import com.artushock.moviesearcher.model.MoviesDTO
+import com.artushock.moviesearcher.model.dto.MoviesDTO
 
 class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHolder>() {
 

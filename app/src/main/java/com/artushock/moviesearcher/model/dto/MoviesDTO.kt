@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.model.dto
 
 class MoviesDTO(
     val page: Int,

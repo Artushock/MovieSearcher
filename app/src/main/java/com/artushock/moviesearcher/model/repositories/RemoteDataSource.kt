@@ -1,8 +1,8 @@
 package com.artushock.moviesearcher.model.repositories
 
 import com.artushock.moviesearcher.BuildConfig
-import com.artushock.moviesearcher.model.MovieDetailDTO
-import com.artushock.moviesearcher.model.MoviesDTO
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
+import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.google.gson.GsonBuilder
 import retrofit2.Callback
 import retrofit2.Retrofit

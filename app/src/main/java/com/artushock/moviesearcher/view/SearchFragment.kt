@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.SearchFragmentBinding
-import com.artushock.moviesearcher.model.MovieDetailDTO
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.MovieLoaderByID
 import com.artushock.moviesearcher.viewmodel.SearchViewModel

@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.model.dto
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

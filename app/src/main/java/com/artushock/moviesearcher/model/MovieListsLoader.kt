@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.artushock.moviesearcher.model.repositories.RemoteDataSource
 import retrofit2.Call
 import retrofit2.Callback

@@ -3,12 +3,13 @@ package com.artushock.moviesearcher.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.artushock.moviesearcher.model.*
+import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.artushock.moviesearcher.model.repositories.RepositoryMovies
-import com.artushock.moviesearcher.model.repositories.RepositoryApiImpl
+import com.artushock.moviesearcher.model.repositories.RepositoryMoviesImpl
 
 class SearchViewModel(
     private val moviesToObserve: MutableLiveData<MovieListState> = MutableLiveData<MovieListState>(),
-    private val repository: RepositoryMovies = RepositoryApiImpl()
+    private val repository: RepositoryMovies = RepositoryMoviesImpl()
 ) : ViewModel(
 ) {
     private val moviesListener: MovieListsLoader.MoviesListener =

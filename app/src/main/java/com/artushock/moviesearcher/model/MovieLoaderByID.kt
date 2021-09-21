@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
 import com.artushock.moviesearcher.BuildConfig
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader

@@ -1,7 +1,7 @@
 package com.artushock.moviesearcher.model.repositories
 
-import com.artushock.moviesearcher.model.MovieDetailDTO
-import com.artushock.moviesearcher.model.MoviesDTO
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
+import com.artushock.moviesearcher.model.dto.MoviesDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

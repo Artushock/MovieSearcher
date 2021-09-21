@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.model.dto
 
 class GenresDTO(
     val genres: List<Genre>

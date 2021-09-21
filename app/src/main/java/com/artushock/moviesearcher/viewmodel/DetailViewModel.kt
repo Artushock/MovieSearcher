@@ -2,12 +2,11 @@ package com.artushock.moviesearcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.artushock.moviesearcher.model.MovieDetailDTO
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.model.repositories.RemoteDataSource
 import com.artushock.moviesearcher.model.repositories.RepositoryMovieDetail
 import com.artushock.moviesearcher.model.repositories.RepositoryMovieDetailImpl
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

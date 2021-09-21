@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.*
+import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
-import com.artushock.moviesearcher.model.MovieDetailDTO
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import java.util.*

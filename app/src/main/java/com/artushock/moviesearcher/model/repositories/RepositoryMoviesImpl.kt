@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import com.artushock.moviesearcher.model.MovieCategory
 import com.artushock.moviesearcher.model.MovieListsLoader
 
-class RepositoryApiImpl : RepositoryMovies {
+class RepositoryMoviesImpl : RepositoryMovies {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun getNewMovies(listener: MovieListsLoader.MoviesListener) {

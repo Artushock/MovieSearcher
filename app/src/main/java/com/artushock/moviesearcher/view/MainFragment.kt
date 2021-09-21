@@ -1,9 +1,11 @@
 package com.artushock.moviesearcher.view
 
+import android.os.Build
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
-import androidx.core.view.MenuCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,9 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
-import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.MovieCategory
-import com.artushock.moviesearcher.model.MovieListState
+import com.artushock.moviesearcher.model.*
 import com.artushock.moviesearcher.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -25,17 +25,6 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.main_options_menu, menu)
-        MenuCompat.setGroupDividerEnabled(menu, true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,17 +33,16 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getMoviesLiveData().observe(viewLifecycleOwner, { render(it) })
+        viewModel.getData()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getLiveData().observe(viewLifecycleOwner, { render(it) })
-        viewModel.getMovieList()
-    }
-
 
     private fun render(data: MovieListState) {
         when (data) {
@@ -63,27 +51,35 @@ class MainFragment : Fragment() {
             }
             is MovieListState.Error -> {
                 binding.mainFragmentProgressBar.visibility = View.GONE
+                view?.showSnackBar("Error ${data.e}", "Reload", {
+                    viewModel.getData()
+                })
             }
             is MovieListState.Success -> {
-                showMainViewers(data.movieList)
+
+                when (data.movieCategory) {
+                    MovieCategory.NEW -> {
+                        val newMoviesRecyclerView: RecyclerView = binding.newMoviesRecyclerView
+                        displayMovieList(data.moviesDTO, newMoviesRecyclerView)
+                    }
+                    MovieCategory.POPULAR -> {
+                        val popularMoviesRecyclerView: RecyclerView =
+                            binding.popularMoviesRecyclerView
+                        displayMovieList(data.moviesDTO, popularMoviesRecyclerView)
+                    }
+                }
             }
         }
     }
 
-    private fun showMainViewers(movies: ArrayList<Movie>) {
+    private fun displayMovieList(movies: MoviesDTO, recyclerView: RecyclerView) {
         binding.mainFragmentProgressBar.visibility = View.GONE
-
-        val popularRV: RecyclerView = binding.popularMoviesRecyclerView
-        initRecyclerView(popularRV, movies, MovieCategory.POPULAR)
-
-        val newRV: RecyclerView = binding.newMoviesRecyclerView
-        initRecyclerView(newRV, movies, MovieCategory.NEW)
+        initRecyclerView(recyclerView, movies)
     }
 
     private fun initRecyclerView(
         rw: RecyclerView,
-        movies: ArrayList<Movie>,
-        moviesCategory: MovieCategory
+        movies: MoviesDTO,
     ) {
         rw.setHasFixedSize(true)
 
@@ -93,40 +89,29 @@ class MainFragment : Fragment() {
         rw.addItemDecoration(getDividerItemDecoration())
 
         val adapter = MoviesPreviewAdapter()
-        adapter.movieList = getMoviesByCategory(movies, moviesCategory)
+        adapter.movieList = movies.results
 
         adapter.movieItemClick = object : MoviesPreviewAdapter.OnMovieItemClickListener {
-            override fun onMovieItemClick(movie: Movie) {
-                val manager = activity?.supportFragmentManager
-                if (manager != null) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(MOVIE_FOR_DETAIL, movie)
-                    val navController = findNavController()
-                    navController.navigate(R.id.movieDetailFragment, bundle)
-                }
+
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onMovieItemClick(movieID: Int) {
+                showDetailFragment(movieID)
             }
         }
-
         rw.adapter = adapter
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun showDetailFragment(movieID: Int) {
+        val bundle = Bundle()
+        bundle.putInt(MOVIE_ID, movieID)
+        val navController = findNavController()
+        navController.navigate(R.id.movieDetailFragment, bundle)
     }
 
     private fun getDividerItemDecoration(): DividerItemDecoration {
         val itemDecoration = DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL)
         itemDecoration.setDrawable(resources.getDrawable(R.drawable.separator, null))
         return itemDecoration
-    }
-
-
-    private fun getMoviesByCategory(
-        movies: ArrayList<Movie>,
-        category: MovieCategory
-    ): List<Movie> {
-        val result = ArrayList<Movie>()
-        for (movie in movies) {
-            if (movie.category == category) {
-                result.add(movie)
-            }
-        }
-        return result
     }
 }

@@ -30,8 +30,9 @@
     <string name="popular">Popular</string>
     <string name="new_movies">New movies</string>
     <string name="test_description">Культовая экранизация одноименного романа Марио Пьюзо «Крестный отец», созданная Френсисом Фордом Копполой, и по сей день остается одним из лучших фильмов в жанре криминальной драмы. 1945–1955 годы. Дон Вито Корлеоне – глава сицилийского мафиозного клана – держит в страхе весь город, без его ведома не может произойти ни одно значимое событие, особенно в криминальной сфере. Но, контролируя посторонних людей, Вито забывает о семье: его сын Майкл, только что вернувшийся с войны героем, отнюдь не желает продолжать семейное дело, идти по стопам отца и заниматься криминалом. Да и в городе начинаются беспорядки: появляются люди, которым вовсе не улыбается подчиняться какому-то там Корлеоне, Крестному отцу мафии. Они хотят навести в городе свои порядки, и на Дона Корлеоне совершается покушение…</string>
-    <string name="budget_format">Бюджет: %d</string>
-    <string name="box_office_format">Сборы: %d</string>
+    <string name="budget_format">Бюджет: %d$</string>
+    <string name="box_office_format">Сборы: %d$</string>
+    <string name="runtime">%d мин.</string>
     <string name="movie_image_content_description">Movie image</string>
     <string name="bookmark_image_content_description">Bookmark image</string>
     <string name="star_image_content_description">Star image</string>

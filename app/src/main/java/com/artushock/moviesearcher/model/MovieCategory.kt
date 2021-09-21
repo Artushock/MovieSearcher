@@ -1,8 +1,11 @@
 package com.artushock.moviesearcher.model
 
-enum class MovieCategory (categoryName: String) {
-    NEW ("New"),
-    POPULAR ("Popular"),
-    SEEN_NOW ("Seen now"),
-    UNKNOWN ("Unknown")
+import com.artushock.moviesearcher.BuildConfig
+import java.net.URL
+
+enum class MovieCategory() {
+    TOP_RATED,
+    NOW_PLAYING,
+    POPULAR
 }
+

@@ -1,20 +1,25 @@
-package com.artushock.moviesearcher.view
+package com.artushock.moviesearcher.view.adapters
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.MovieItemBinding
-import com.artushock.moviesearcher.model.Movie
+import com.artushock.moviesearcher.model.dto.GenresDTO
+import com.artushock.moviesearcher.model.dto.MoviesDTO
+import com.squareup.picasso.Picasso
 
 
 class MoviesPreviewAdapter :
     RecyclerView.Adapter<MoviesPreviewAdapter.MoviesPreviewViewHolder>() {
 
-    var movieItemClick : OnMovieItemClickListener? = null
+    var movieItemClick: OnMovieItemClickListener? = null
 
-    var movieList: List<Movie> = listOf()
+    var movieList: List<MoviesDTO.MoviePreview> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -25,6 +30,7 @@ class MoviesPreviewAdapter :
             MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: MoviesPreviewViewHolder, position: Int) {
         holder.bind(movieList[position])
     }
@@ -39,18 +45,24 @@ class MoviesPreviewAdapter :
         private val genre: TextView = binding.movieGenreItem
         private val rating: TextView = binding.movieRateItem
         private val item: LinearLayout = binding.movieItemElement
+        private val poster: ImageView = binding.movieItemPoster
 
-        fun bind(movie: Movie) {
-            name.text = movie.name
-            genre.text = movie.mainGenre.genreName
-            rating.text = movie.rating.toString()
-            item.setOnClickListener{
-                movieItemClick?.onMovieItemClick(movie)
+        @RequiresApi(Build.VERSION_CODES.N)
+        fun bind(movie: MoviesDTO.MoviePreview) {
+            name.text = movie.title
+            rating.text = movie.vote_average.toString()
+            item.setOnClickListener {
+                movieItemClick?.onMovieItemClick(movie.id)
             }
+            Picasso
+                .get()
+                .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
+                .fit()
+                .into(poster)
         }
     }
 
     interface OnMovieItemClickListener {
-        fun onMovieItemClick(movie: Movie)
+        fun onMovieItemClick(movieID: Int)
     }
 }

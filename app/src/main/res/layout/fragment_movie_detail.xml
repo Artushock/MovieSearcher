@@ -8,6 +8,22 @@
     android:padding="16dp"
     tools:context=".view.MovieDetailFragment">
 
+    <FrameLayout
+        android:id="@+id/detail_fragment_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scrollbarSize="@dimen/material_emphasis_high_type" />
+
+    </FrameLayout>
+
+
     <TextView
         android:id="@+id/movie_name_detail_tv"
         android:layout_width="match_parent"
@@ -30,12 +46,13 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/poster_path_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#CACACA"
-            android:src="@drawable/empty"
-            android:contentDescription="@string/movie_image_content_description" />
+            android:contentDescription="@string/movie_image_content_description"
+            android:src="@drawable/empty" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,12 +113,19 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/description_detail_tv"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="@dimen/small_detail_text"
-        tools:text="@string/test_description" />
+        android:layout_marginTop="16dp">
+
+
+        <TextView
+            android:id="@+id/description_detail_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:textSize="@dimen/small_detail_text"
+            tools:text="@string/test_description" />
+    </ScrollView>
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentSettingsBinding
 
+const val APP_PREFERENCES_KEY = "APP_PREFERENCES_KEY"
 const val ADULT_CONTENT_SHOW_KEY = "ADULT_CONTENT_SHOW_KEY"
 const val CARTOONS_SHOW_KEY = "CARTOONS_SHOW_KEY"
 
@@ -42,7 +43,9 @@ class SettingsFragment : Fragment() {
         adultSwitch.setOnCheckedChangeListener { button, isChecked ->
             run {
                 activity?.let {
-                    with(it.getPreferences(Context.MODE_PRIVATE).edit()) {
+                    with(
+                        it.getSharedPreferences(APP_PREFERENCES_KEY, Context.MODE_PRIVATE).edit()
+                    ) {
                         putBoolean(ADULT_CONTENT_SHOW_KEY, isChecked)
                         apply()
                     }
@@ -54,7 +57,9 @@ class SettingsFragment : Fragment() {
         cartoonSwitch.setOnCheckedChangeListener { button, isChecked ->
             run {
                 activity?.let {
-                    with(it.getPreferences(Context.MODE_PRIVATE).edit()) {
+                    with(
+                        it.getSharedPreferences(APP_PREFERENCES_KEY, Context.MODE_PRIVATE).edit()
+                    ) {
                         putBoolean(CARTOONS_SHOW_KEY, isChecked)
                         apply()
                     }
@@ -68,7 +73,9 @@ class SettingsFragment : Fragment() {
     private fun initAdultSummary(adultSwitch: Switch) {
         val summaryAdult = binding.adultsSwitchSummary
         activity?.let {
-            if (it.getPreferences(Context.MODE_PRIVATE).getBoolean(ADULT_CONTENT_SHOW_KEY, false)) {
+            if (it.getSharedPreferences(APP_PREFERENCES_KEY, Context.MODE_PRIVATE)
+                    .getBoolean(ADULT_CONTENT_SHOW_KEY, false)
+            ) {
                 summaryAdult.text = getText(R.string.turn_off_adult_content)
                 adultSwitch.isChecked = true
             } else {
@@ -82,7 +89,7 @@ class SettingsFragment : Fragment() {
     private fun initCartoonSummary(cartoonSwitch: Switch) {
         val summaryCartoon = binding.cartoonsSwitchSummary
         activity?.let {
-            if (it.getPreferences(Context.MODE_PRIVATE).getBoolean(CARTOONS_SHOW_KEY, false)) {
+            if (it.getSharedPreferences(APP_PREFERENCES_KEY, Context.MODE_PRIVATE).getBoolean(CARTOONS_SHOW_KEY, false)) {
                 summaryCartoon.text = getText(R.string.turn_off_cartoons)
                 cartoonSwitch.isChecked = true
             } else {

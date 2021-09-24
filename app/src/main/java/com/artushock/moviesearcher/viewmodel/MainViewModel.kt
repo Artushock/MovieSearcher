@@ -1,13 +1,16 @@
 package com.artushock.moviesearcher.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.artushock.moviesearcher.app.App
 import com.artushock.moviesearcher.model.MovieCategory
 import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.artushock.moviesearcher.model.repositories.RemoteDataSource
 import com.artushock.moviesearcher.model.repositories.RepositoryMovies
 import com.artushock.moviesearcher.model.repositories.RepositoryMoviesImpl
+import com.artushock.moviesearcher.view.fragments.ADULT_CONTENT_SHOW_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +19,7 @@ class MainViewModel(
     val nowPlayingMoviesToObserve: MutableLiveData<MovieListState> = MutableLiveData<MovieListState>(),
     val popularMoviesToObserve: MutableLiveData<MovieListState> = MutableLiveData<MovieListState>(),
     val topRatedMoviesToObserve: MutableLiveData<MovieListState> = MutableLiveData<MovieListState>(),
-    private val repository: RepositoryMovies = RepositoryMoviesImpl(RemoteDataSource())
+    private val repository: RepositoryMovies = RepositoryMoviesImpl(RemoteDataSource()),
 ) : ViewModel() {
 
     fun getMovies() {
@@ -35,8 +38,10 @@ class MainViewModel(
                 val serverResponse: MoviesDTO? = response.body()
                 observe.postValue(
                     if (response.isSuccessful && serverResponse != null) {
+                        val moviesToShow: MoviesDTO = checkMovies(serverResponse)
+
                         MovieListState.Success(
-                            serverResponse,
+                            moviesToShow,
                             movieCategory
                         )
                     } else {
@@ -62,5 +67,24 @@ class MainViewModel(
                 repository.getPopularMovies(1, callback)
             }
         }
+    }
+
+    private fun checkMovies(serverResponse: MoviesDTO): MoviesDTO {
+        if (App.getAppPreferences()?.getBoolean(ADULT_CONTENT_SHOW_KEY, false) == true) {
+            return adultFilterMovies(serverResponse)
+        }
+        return serverResponse
+    }
+
+
+    private fun adultFilterMovies(moviesToCheck: MoviesDTO): MoviesDTO {
+        val checkedResults: MutableList<MoviesDTO.MoviePreview> = mutableListOf()
+        for (movie in moviesToCheck.results) {
+            if (!movie.adult) {
+                checkedResults.add(movie)
+            }
+        }
+        moviesToCheck.results = checkedResults
+        return moviesToCheck
     }
 }

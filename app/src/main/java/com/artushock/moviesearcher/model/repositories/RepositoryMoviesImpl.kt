@@ -20,4 +20,8 @@ class RepositoryMoviesImpl(
         remoteDataSource.getTopRatedMoviesDataFromServer(page, callback)
     }
 
+    override fun getGenresList(callback: Callback<GenresDTO>) {
+        remoteDataSource.getGenres(callback)
+    }
+
 }

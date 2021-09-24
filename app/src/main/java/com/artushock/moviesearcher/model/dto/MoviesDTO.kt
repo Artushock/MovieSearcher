@@ -13,7 +13,7 @@ class MoviesDTO(
         val release_date: String,
         val original_language: String,
         val genre_ids: List<Int>,
-        val genre_names: List<String>,
+        var genre_names: List<String>,
         val title: String,
         val vote_average: Float,
         val poster_path: String

@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.MovieItemBinding
-import com.artushock.moviesearcher.model.dto.GenresDTO
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.squareup.picasso.Picasso
+import java.util.*
 
 
 class MoviesPreviewAdapter :
@@ -54,6 +54,14 @@ class MoviesPreviewAdapter :
             item.setOnClickListener {
                 movieItemClick?.onMovieItemClick(movie.id)
             }
+            movie.genre_names.let {
+                genre.text = movie.genre_names[0].replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                }
+            }
+
             Picasso
                 .get()
                 .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")

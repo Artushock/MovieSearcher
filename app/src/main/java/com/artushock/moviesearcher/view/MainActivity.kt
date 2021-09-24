@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_main,
                 R.id.nav_search,
-                R.id.nav_settings
+                R.id.nav_settings,
             )
         )
 

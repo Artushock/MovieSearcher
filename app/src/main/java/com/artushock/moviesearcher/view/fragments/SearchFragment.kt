@@ -27,6 +27,7 @@ import com.artushock.moviesearcher.viewmodel.SearchViewModel
 class SearchFragment : Fragment() {
     private var _binding: SearchFragmentBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: SearchViewModel by lazy {
         ViewModelProvider(this).get(SearchViewModel::class.java)
     }

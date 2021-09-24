@@ -19,11 +19,12 @@
         android:id="@+id/nav_search"
         android:name="com.artushock.moviesearcher.view.fragments.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/search_fragment" />
+        tools:layout="@layout/search_fragment"/>
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.artushock.moviesearcher.view.fragments.SettingsFragment"
-        android:label="Settings" />
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.artushock.moviesearcher.view.fragments.MovieDetailFragment"

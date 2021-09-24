@@ -40,4 +40,13 @@
     <string name="movie_name">Movie name</string>
     <string name="go">GO</string>
     <string name="top_rated">Top rated movies</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie_confines">Confines</string>
+    <string name="turn_on_adult_content">Turn on to show adult content</string>
+    <string name="turn_off_adult_content">Turn off to forbid adult content</string>
+    <string name="turn_on_cartoons">Turn on to show cartoons</string>
+    <string name="turn_off_cartoons">Turn off to forbid cartoons</string>
+    <string name="show_cartoons">Show cartoons</string>
+    <string name="adult_content">Adult content</string>
 </resources>

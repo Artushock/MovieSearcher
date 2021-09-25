@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_main,
-                R.id.nav_search,
+                R.id.nav_seen_movies,
                 R.id.nav_settings,
             )
         )

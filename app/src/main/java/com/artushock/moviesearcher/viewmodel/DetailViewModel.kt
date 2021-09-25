@@ -2,11 +2,11 @@ package com.artushock.moviesearcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.artushock.moviesearcher.model.dto.MovieDetailDTO
+import com.artushock.moviesearcher.app.App.Companion.getSeenMoviesDao
+import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MovieDetailState
-import com.artushock.moviesearcher.model.repositories.RemoteDataSource
-import com.artushock.moviesearcher.model.repositories.RepositoryMovieDetail
-import com.artushock.moviesearcher.model.repositories.RepositoryMovieDetailImpl
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
+import com.artushock.moviesearcher.model.repositories.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,12 +16,17 @@ const val CORRUPTED_DATA = "CORRUPTED_DATA"
 
 class DetailViewModel(
     val movieDetailLiveData: MutableLiveData<MovieDetailState> = MutableLiveData(),
-    private val remoteRepository: RepositoryMovieDetail = RepositoryMovieDetailImpl(RemoteDataSource())
+    private val remoteRepository: RepositoryMovieDetail = RepositoryMovieDetailImpl(RemoteDataSource()),
+    private val seenMoviesRepository: LocalRepository = LocalRepositoryImpl(getSeenMoviesDao())
 ) : ViewModel() {
 
     fun getDetailLiveDataFromServer(id: Int) {
         movieDetailLiveData.value = MovieDetailState.Loading
         remoteRepository.getMovieDataFromServer(id, callback)
+    }
+
+    fun saveSeenMovieToDataBase(movie: Movie) {
+        seenMoviesRepository.saveEntity(movie)
     }
 
     private val callback = object : Callback<MovieDetailDTO> {

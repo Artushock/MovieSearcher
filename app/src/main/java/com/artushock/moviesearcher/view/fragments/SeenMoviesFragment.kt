@@ -17,19 +17,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.SearchFragmentBinding
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
-import com.artushock.moviesearcher.model.MovieListState
 import com.artushock.moviesearcher.model.MovieLoaderByID
-import com.artushock.moviesearcher.view.fragments.MOVIE_ID
-import com.artushock.moviesearcher.view.adapters.MovieSearchAdapter
+import com.artushock.moviesearcher.model.SeenMoviesState
+import com.artushock.moviesearcher.view.adapters.SeenMoviesAdapter
 import com.artushock.moviesearcher.view.showSnackBar
-import com.artushock.moviesearcher.viewmodel.SearchViewModel
+import com.artushock.moviesearcher.viewmodel.SeenMoviesViewModel
 
-class SearchFragment : Fragment() {
+class SeenMoviesFragment : Fragment() {
     private var _binding: SearchFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this).get(SearchViewModel::class.java)
+    private val viewModel: SeenMoviesViewModel by lazy {
+        ViewModelProvider(this).get(SeenMoviesViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -43,13 +42,13 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.topRatedMoviesToObserve.observe(viewLifecycleOwner, { render(it) })
-        viewModel.getTopRatedMovies()
+        viewModel.seenMoviesToObserve.observe(viewLifecycleOwner, { render(it) })
+        viewModel.getSeenMoviesFromDataBase()
 
         initSearch(viewModel)
     }
 
-    private fun initSearch(viewModel: SearchViewModel) {
+    private fun initSearch(viewModel: SeenMoviesViewModel) {
         val editText: EditText = binding.searchEditText
         val searchButton: Button = binding.searchButton
 
@@ -58,36 +57,36 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun render(it: MovieListState?) {
+    private fun render(it: SeenMoviesState) {
         when (it) {
-            is MovieListState.Loading -> {
+            is SeenMoviesState.Loading -> {
                 binding.searchFragmentProgressBar.visibility = View.VISIBLE
             }
-            is MovieListState.Error -> {
+            is SeenMoviesState.Error -> {
                 this.view?.showSnackBar(
                     getString(R.string.error),
                     getString(R.string.reload),
-                    { viewModel.getTopRatedMovies() })
+                    { viewModel.getSeenMoviesFromDataBase() })
             }
-            is MovieListState.Success -> {
+            is SeenMoviesState.Success -> {
                 binding.searchFragmentProgressBar.visibility = View.GONE
 
                 val searchRecyclerView: RecyclerView = binding.searchResultRecyclerView
                 val layoutManager = LinearLayoutManager(context)
-                val adapter = MovieSearchAdapter()
+                val adapter = SeenMoviesAdapter()
 
                 searchRecyclerView.setHasFixedSize(true)
                 searchRecyclerView.layoutManager = layoutManager
-                adapter.movieList = it.moviesDTO.results
+                adapter.seenMoviesList = it.movies
 
-                adapter.onSearchedItemClickListener =
-                    object : MovieSearchAdapter.OnSearchedItemClickListener {
-                        @RequiresApi(Build.VERSION_CODES.N)
-                        override fun onSearchedItemClick(id: Int) {
-                            showDetailFragment(id)
-                        }
-
-                    }
+//                adapter.onSearchedItemClickListener =
+//                    object : SeenMoviesAdapter.OnSearchedItemClickListener {
+//                        @RequiresApi(Build.VERSION_CODES.N)
+//                        override fun onSearchedItemClick(id: Int) {
+//                            showDetailFragment(id)
+//                        }
+//
+//                    }
 
                 searchRecyclerView.adapter = adapter
             }

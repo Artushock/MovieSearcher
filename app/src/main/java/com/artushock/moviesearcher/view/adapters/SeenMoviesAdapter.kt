@@ -6,13 +6,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.databinding.SearchedMovieItemBinding
-import com.artushock.moviesearcher.model.dto.MoviesDTO
+import com.artushock.moviesearcher.model.Movie
 
-class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHolder>() {
+class SeenMoviesAdapter : RecyclerView.Adapter<SeenMoviesAdapter.MovieSearchHolder>() {
 
     var onSearchedItemClickListener: OnSearchedItemClickListener? = null
 
-    var movieList: List<MoviesDTO.MoviePreview> = listOf()
+    var seenMoviesList: List<Movie> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -24,10 +24,10 @@ class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHo
         )
 
     override fun onBindViewHolder(holder: MovieSearchHolder, position: Int) {
-        holder.bind(movieList[position])
+        holder.bind(seenMoviesList[position])
     }
 
-    override fun getItemCount(): Int = movieList.size
+    override fun getItemCount(): Int = seenMoviesList.size
 
     inner class MovieSearchHolder(binding: SearchedMovieItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -37,13 +37,13 @@ class MovieSearchAdapter : RecyclerView.Adapter<MovieSearchAdapter.MovieSearchHo
         private val rating: TextView = binding.ratingSearchItemRv
         private val item: LinearLayout = binding.searchItem
 
-        fun bind(movie: MoviesDTO.MoviePreview) {
+        fun bind(movie: Movie) {
             name.text = movie.title
             releaseYear.text = movie.release_date.substring(0, 4)
-            country.text = movie.original_language
+            country.text = movie.language
             rating.text = movie.vote_average.toString()
             item.setOnClickListener {
-                onSearchedItemClickListener?.onSearchedItemClick(movie.id)
+                onSearchedItemClickListener?.onSearchedItemClick(movie.movieId)
             }
         }
     }

@@ -55,10 +55,12 @@ class MoviesPreviewAdapter :
                 movieItemClick?.onMovieItemClick(movie.id)
             }
             movie.genre_names.let {
-                genre.text = movie.genre_names[0].replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.getDefault()
-                    ) else it.toString()
+                if (movie.genre_names.isNotEmpty()) {
+                    genre.text = movie.genre_names[0].replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.getDefault()
+                        ) else it.toString()
+                    }
                 }
             }
 

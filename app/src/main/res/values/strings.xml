@@ -5,7 +5,7 @@
     <string name="cancel_str">Cancel</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="main_str">Main</string>
-    <string name="main_search">Search</string>
+    <string name="seen_movies">Seen Movies</string>
     <string name="main_settings">Settings</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -49,4 +49,5 @@
     <string name="turn_off_cartoons">Turn off to forbid cartoons</string>
     <string name="show_cartoons">Show cartoons</string>
     <string name="adult_content">Adult content</string>
+    <string name="add_to_seen">Add to seen</string>
 </resources>

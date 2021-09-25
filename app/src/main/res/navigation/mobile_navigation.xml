@@ -16,8 +16,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_search"
-        android:name="com.artushock.moviesearcher.view.fragments.SearchFragment"
+        android:id="@+id/nav_seen_movies"
+        android:name="com.artushock.moviesearcher.view.fragments.SeenMoviesFragment"
         android:label="Search"
         tools:layout="@layout/search_fragment"/>
     <fragment

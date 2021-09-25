@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
+import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import java.util.*
 
 const val MOVIE_ID = "MOVIE_FOR_DETAIL"
@@ -67,6 +69,13 @@ class MovieDetailFragment : Fragment() {
     private fun setMovieData(movie: MovieDetailDTO) {
         with(binding) {
             movie.let { movie ->
+                add_to_seen_btn.setOnClickListener {
+                    viewModel.saveSeenMovieToDataBase(
+                        with(movie){
+                            Movie(id, title, original_language, runtime, release_date, vote_average)
+                        }
+                    )
+                }
                 movieNameDetailTv.text = movie.title
                 movieFullDetailTv.text = movie.original_title
                 genreDetailTv.text = getGenres(movie)

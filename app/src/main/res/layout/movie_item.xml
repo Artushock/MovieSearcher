@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_item_element"
-    android:layout_width="160dp"
-    android:layout_height="240dp"
-    android:orientation="vertical">
+    android:layout_width="150dp"
+    android:layout_height="250dp"
+    android:orientation="vertical"
+    android:layout_marginEnd="10dp">
 
     <FrameLayout
         android:id="@+id/movie_image_item"
@@ -14,7 +15,7 @@
         android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/movie_item_note"
+            android:id="@+id/movie_item_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#CACACA"
@@ -23,11 +24,12 @@
             android:src="@drawable/empty" />
 
         <ImageButton
-            android:layout_width="24dp"
+            android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="end"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:background="@null"
             android:contentDescription="@string/bookmark_image_content_description"
             android:src="@drawable/ic_baseline_turned_in_not_24" />
 

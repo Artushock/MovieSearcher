@@ -2,6 +2,7 @@ package com.artushock.moviesearcher.view.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.SearchFragmentBinding
+import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieLoaderByID
 import com.artushock.moviesearcher.model.SeenMoviesState
@@ -82,8 +85,8 @@ class SeenMoviesFragment : Fragment() {
                 adapter.onSearchedItemClickListener =
                     object : SeenMoviesAdapter.OnSearchedItemClickListener {
                         @RequiresApi(Build.VERSION_CODES.N)
-                        override fun onSearchedItemClick(id: Int) {
-                            addCommentToSeenMovie(id)
+                        override fun onSearchedItemClick(movie: Movie) {
+                            showSeenMovieComment(movie.title, movie.comment)
                         }
                     }
 
@@ -92,8 +95,18 @@ class SeenMoviesFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun addCommentToSeenMovie(id: Int) {
-        Toast.makeText(requireActivity(), "Gottent id is: $id", Toast.LENGTH_SHORT).show()
+    private fun showSeenMovieComment(title: String, comment: String) {
+        activity?.let {
+            val builder = AlertDialog.Builder(it)
+            builder
+                .setTitle(title)
+                .setMessage("Комментарий: $comment")
+                .setPositiveButton(
+                    "Ok"
+                ) { _, _ ->
+                    //do nothing
+                }
+            builder.create().show()
+        } ?: throw IllegalStateException("Activity cannot be null")
     }
 }

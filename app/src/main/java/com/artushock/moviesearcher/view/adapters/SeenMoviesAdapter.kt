@@ -42,13 +42,14 @@ class SeenMoviesAdapter : RecyclerView.Adapter<SeenMoviesAdapter.MovieSearchHold
             releaseYear.text = movie.release_date.substring(0, 4)
             country.text = movie.language
             rating.text = movie.vote_average.toString()
+
             item.setOnClickListener {
-                onSearchedItemClickListener?.onSearchedItemClick(movie.movieId)
+                onSearchedItemClickListener?.onSearchedItemClick(movie)
             }
         }
     }
 
     interface OnSearchedItemClickListener {
-        fun onSearchedItemClick(id: Int)
+        fun onSearchedItemClick(movie: Movie)
     }
 }

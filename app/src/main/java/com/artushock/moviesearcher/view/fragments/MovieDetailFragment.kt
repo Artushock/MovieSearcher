@@ -1,7 +1,6 @@
 package com.artushock.moviesearcher.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +16,13 @@ import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import java.util.*
 
 
 const val MOVIE_ID = "MOVIE_FOR_DETAIL"
 
 class MovieDetailFragment : Fragment() {
+
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -72,58 +71,55 @@ class MovieDetailFragment : Fragment() {
 
     private fun setMovieData(movie: MovieDetailDTO) {
         with(binding) {
-            add_to_seen_btn.isChecked = viewModel.isTheMovieExistInDb(movie.id)
-            movie.let { movie ->
-                add_to_seen_btn.setOnCheckedChangeListener { _, isChecked ->
-
-                    val comment = if (isChecked) {
-                        getCommentFromAlertDialog()
-                    } else "No comments"
-
-                    val mv = with(movie) {
-                        Movie(
-                            id,
-                            title,
-                            original_language,
-                            runtime,
-                            release_date,
-                            vote_average,
-                            comment
-                        )
-                    }
-                    if (isChecked) {
-                        viewModel.saveSeenMovieToDataBase(mv)
-
-                    } else {
-                        viewModel.deleteFromSeenMovieToDataBase(mv)
-                    }
+            addToSeenBtn.isChecked = viewModel.isTheMovieExistInDb(movie.id)
+            addToSeenBtn.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    getCommentFromAlertDialog(movie)
+                } else {
+                    val mv = getMovie(movie, "")
+                    viewModel.deleteFromSeenMovieToDataBase(mv)
                 }
-                add_to_seen_btn.setOnClickListener {
-
-                }
-                movieNameDetailTv.text = movie.title
-                movieFullDetailTv.text = movie.original_title
-                genreDetailTv.text = getGenres(movie)
-                runningTimeDetailTv.text = getString(R.string.runtime, movie.runtime)
-                ratingDetailTv.text = movie.vote_average.toString()
-                budgetDetailTv.text = getString(R.string.budget_format, movie.budget)
-                boxOfficeDetailTv.text = getString(R.string.box_office_format, movie.revenue)
-                releaseDateDetailTv.text = movie.release_date
-                descriptionDetailTv.text = movie.overview
-                Picasso
-                    .get()
-                    .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
-                    .into(posterPathImage)
             }
+
+            movieNameDetailTv.text = movie.title
+            movieFullDetailTv.text = movie.original_title
+            genreDetailTv.text = getGenres(movie)
+            runningTimeDetailTv.text = getString(R.string.runtime, movie.runtime)
+            ratingDetailTv.text = movie.vote_average.toString()
+            budgetDetailTv.text = getString(R.string.budget_format, movie.budget)
+            boxOfficeDetailTv.text = getString(R.string.box_office_format, movie.revenue)
+            releaseDateDetailTv.text = movie.release_date
+            descriptionDetailTv.text = movie.overview
+            Picasso
+                .get()
+                .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
+                .into(posterPathImage)
         }
     }
 
-    private fun getCommentFromAlertDialog(): String {
-        var result = "No comments"
+    private fun getMovie(
+        movie: MovieDetailDTO,
+        comment: String
+    ): Movie {
+        val mv = with(movie) {
+
+            Movie(
+                id,
+                title,
+                original_language,
+                runtime,
+                release_date,
+                vote_average,
+                comment
+            )
+        }
+        return mv
+    }
+
+    private fun getCommentFromAlertDialog(movie: MovieDetailDTO) {
         val editText = EditText(requireActivity())
 
         activity?.let {
-            // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
             builder
                 .setTitle("Комментарий")
@@ -133,18 +129,18 @@ class MovieDetailFragment : Fragment() {
                 .setPositiveButton(
                     "Добавить"
                 ) { _, _ ->
-                    result = editText.text.toString()
-                    Log.d("123123123", "result: $result")
+                    val comment = editText.text.toString()
+                    val mv = getMovie(movie, comment)
+                    viewModel.saveSeenMovieToDataBase(mv)
                 }
                 .setNegativeButton(
                     "Отмена"
                 ) { _, _ ->
-                    // do nothing
+                    val mv = getMovie(movie, "No comments")
+                    viewModel.saveSeenMovieToDataBase(mv)
                 }
             builder.create().show()
         } ?: throw IllegalStateException("Activity cannot be null")
-
-        return result
     }
 
     private fun getGenres(movie: MovieDetailDTO): String {
@@ -166,3 +162,4 @@ class MovieDetailFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
+

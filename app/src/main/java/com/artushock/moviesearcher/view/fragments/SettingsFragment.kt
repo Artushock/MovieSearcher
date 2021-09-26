@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Switch
 import androidx.fragment.app.Fragment
 import com.artushock.moviesearcher.R
+import com.artushock.moviesearcher.app.App
 import com.artushock.moviesearcher.databinding.FragmentSettingsBinding
+import com.artushock.moviesearcher.model.repositories.LocalRepository
+import com.artushock.moviesearcher.model.repositories.LocalRepositoryImpl
 
 const val APP_PREFERENCES_KEY = "APP_PREFERENCES_KEY"
 const val ADULT_CONTENT_SHOW_KEY = "ADULT_CONTENT_SHOW_KEY"
@@ -18,6 +22,10 @@ const val CARTOONS_SHOW_KEY = "CARTOONS_SHOW_KEY"
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+
+    private val seenMoviesRepository: LocalRepository by lazy {
+        LocalRepositoryImpl(App.getSeenMoviesDao())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +38,14 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initSettingsElements()
+        initClearDataBaseButton()
+    }
+
+    private fun initClearDataBaseButton() {
+        val clearDbButton: Button = binding.clearDbBtn
+        clearDbButton.setOnClickListener() {
+            seenMoviesRepository.clearDB()
+        }
     }
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -89,7 +105,9 @@ class SettingsFragment : Fragment() {
     private fun initCartoonSummary(cartoonSwitch: Switch) {
         val summaryCartoon = binding.cartoonsSwitchSummary
         activity?.let {
-            if (it.getSharedPreferences(APP_PREFERENCES_KEY, Context.MODE_PRIVATE).getBoolean(CARTOONS_SHOW_KEY, false)) {
+            if (it.getSharedPreferences(APP_PREFERENCES_KEY, Context.MODE_PRIVATE)
+                    .getBoolean(CARTOONS_SHOW_KEY, false)
+            ) {
                 summaryCartoon.text = getText(R.string.turn_off_cartoons)
                 cartoonSwitch.isChecked = true
             } else {
@@ -98,4 +116,6 @@ class SettingsFragment : Fragment() {
             }
         }
     }
+
+
 }

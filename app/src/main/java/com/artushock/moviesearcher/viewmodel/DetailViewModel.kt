@@ -29,6 +29,14 @@ class DetailViewModel(
         seenMoviesRepository.saveEntity(movie)
     }
 
+    fun deleteFromSeenMovieToDataBase(movie: Movie) {
+        seenMoviesRepository.deleteEntityByMovieId(movie.movieId)
+    }
+
+    fun isTheMovieExistInDb(movieId: Int): Boolean {
+        return !seenMoviesRepository.checkMovieById(movieId)
+    }
+
     private val callback = object : Callback<MovieDetailDTO> {
         override fun onResponse(call: Call<MovieDetailDTO>, response: Response<MovieDetailDTO>) {
 

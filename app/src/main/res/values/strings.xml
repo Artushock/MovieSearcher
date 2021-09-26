@@ -50,4 +50,7 @@
     <string name="show_cartoons">Show cartoons</string>
     <string name="adult_content">Adult content</string>
     <string name="add_to_seen">Add to seen</string>
+    <string name="remove_from_seen">Remove from seen</string>
+    <string name="seen_movies_database">Seen movies database</string>
+    <string name="clear_seen_movies_database">Clear seen movies database</string>
 </resources>

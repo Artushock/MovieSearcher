@@ -14,6 +14,20 @@ class LocalRepositoryImpl(private val localDataSource: SeenMoviesDao) : LocalRep
         localDataSource.insert(convertMovieToSeenMovieEntity(movie))
     }
 
+    override fun deleteEntityByMovieId(id: Int) {
+        localDataSource.deleteMoviesByMovieId(id)
+    }
+
+
+    override fun clearDB() {
+        localDataSource.clearSeenMoviesList()
+    }
+
+    override fun checkMovieById(id: Int): Boolean {
+        val moviesEntities: List<SeenMoviesEntity> = localDataSource.getMoviesById(id)
+        return moviesEntities.isEmpty()
+    }
+
     private fun convertSeenMovieEntityToMovie(seenMovieList: List<SeenMoviesEntity>): List<Movie> {
         return seenMovieList.map {
             Movie(it.movieId, it.name, it.lang, it.runtime, it.releaseDate, it.rating)

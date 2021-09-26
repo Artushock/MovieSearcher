@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
 import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.MovieDetailState
+import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
@@ -68,13 +68,28 @@ class MovieDetailFragment : Fragment() {
 
     private fun setMovieData(movie: MovieDetailDTO) {
         with(binding) {
+            add_to_seen_btn.isChecked = viewModel.isTheMovieExistInDb(movie.id)
             movie.let { movie ->
+                add_to_seen_btn.setOnCheckedChangeListener { _, isChecked ->
+                    val mv = with(movie) {
+                        Movie(
+                            id,
+                            title,
+                            original_language,
+                            runtime,
+                            release_date,
+                            vote_average
+                        )
+                    }
+                    if (isChecked) {
+                        viewModel.saveSeenMovieToDataBase(mv)
+
+                    } else {
+                        viewModel.deleteFromSeenMovieToDataBase(mv)
+                    }
+                }
                 add_to_seen_btn.setOnClickListener {
-                    viewModel.saveSeenMovieToDataBase(
-                        with(movie){
-                            Movie(id, title, original_language, runtime, release_date, vote_average)
-                        }
-                    )
+
                 }
                 movieNameDetailTv.text = movie.title
                 movieFullDetailTv.text = movie.original_title

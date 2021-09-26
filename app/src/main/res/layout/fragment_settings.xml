@@ -47,5 +47,19 @@
         android:textSize="14sp"
         tools:text="@string/turn_on_cartoons" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/seen_movies_database"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/clear_db_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_seen_movies_database"/>
+
 
 </LinearLayout>

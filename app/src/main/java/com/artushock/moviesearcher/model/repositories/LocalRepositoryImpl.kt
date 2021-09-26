@@ -30,7 +30,7 @@ class LocalRepositoryImpl(private val localDataSource: SeenMoviesDao) : LocalRep
 
     private fun convertSeenMovieEntityToMovie(seenMovieList: List<SeenMoviesEntity>): List<Movie> {
         return seenMovieList.map {
-            Movie(it.movieId, it.name, it.lang, it.runtime, it.releaseDate, it.rating)
+            Movie(it.movieId, it.name, it.lang, it.runtime, it.releaseDate, it.rating, it.comment)
         }
     }
 
@@ -43,7 +43,8 @@ class LocalRepositoryImpl(private val localDataSource: SeenMoviesDao) : LocalRep
                 language,
                 runtime,
                 release_date,
-                vote_average
+                vote_average,
+                comment
             )
         }
 

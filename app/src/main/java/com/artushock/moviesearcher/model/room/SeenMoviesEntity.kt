@@ -13,5 +13,6 @@ data class SeenMoviesEntity(
     val lang: String,
     val runtime: Int,
     val releaseDate: String,
-    val rating: Double
+    val rating: Double,
+    val comment: String
 )

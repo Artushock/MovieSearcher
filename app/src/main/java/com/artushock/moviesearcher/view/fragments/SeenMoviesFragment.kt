@@ -79,14 +79,13 @@ class SeenMoviesFragment : Fragment() {
                 searchRecyclerView.layoutManager = layoutManager
                 adapter.seenMoviesList = it.movies
 
-//                adapter.onSearchedItemClickListener =
-//                    object : SeenMoviesAdapter.OnSearchedItemClickListener {
-//                        @RequiresApi(Build.VERSION_CODES.N)
-//                        override fun onSearchedItemClick(id: Int) {
-//                            showDetailFragment(id)
-//                        }
-//
-//                    }
+                adapter.onSearchedItemClickListener =
+                    object : SeenMoviesAdapter.OnSearchedItemClickListener {
+                        @RequiresApi(Build.VERSION_CODES.N)
+                        override fun onSearchedItemClick(id: Int) {
+                            addCommentToSeenMovie(id)
+                        }
+                    }
 
                 searchRecyclerView.adapter = adapter
             }
@@ -94,21 +93,7 @@ class SeenMoviesFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun showDetailFragment(id: Int) {
-        val movieDetailListener: MovieLoaderByID.MovieDetailListener =
-            object : MovieLoaderByID.MovieDetailListener {
-                override fun onMovieDetailListener(movieDetail: MovieDetailDTO) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(MOVIE_ID, movieDetail)
-                    val navController = findNavController()
-                    navController.navigate(R.id.movieDetailFragment, bundle)
-                }
-
-                override fun onMovieDetailFailed(e: Throwable) {
-                    Toast.makeText(context, "Error: $e", Toast.LENGTH_SHORT).show()
-                }
-            }
-        val movieLoaderByID = MovieLoaderByID(id, movieDetailListener)
-        movieLoaderByID.loadMovie()
+    private fun addCommentToSeenMovie(id: Int) {
+        Toast.makeText(requireActivity(), "Gottent id is: $id", Toast.LENGTH_SHORT).show()
     }
 }

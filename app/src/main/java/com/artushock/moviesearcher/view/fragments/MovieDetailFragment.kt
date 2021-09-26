@@ -1,10 +1,13 @@
 package com.artushock.moviesearcher.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.artushock.moviesearcher.R
@@ -16,6 +19,7 @@ import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import java.util.*
+
 
 const val MOVIE_ID = "MOVIE_FOR_DETAIL"
 
@@ -71,6 +75,11 @@ class MovieDetailFragment : Fragment() {
             add_to_seen_btn.isChecked = viewModel.isTheMovieExistInDb(movie.id)
             movie.let { movie ->
                 add_to_seen_btn.setOnCheckedChangeListener { _, isChecked ->
+
+                    val comment = if (isChecked) {
+                        getCommentFromAlertDialog()
+                    } else "No comments"
+
                     val mv = with(movie) {
                         Movie(
                             id,
@@ -78,7 +87,8 @@ class MovieDetailFragment : Fragment() {
                             original_language,
                             runtime,
                             release_date,
-                            vote_average
+                            vote_average,
+                            comment
                         )
                     }
                     if (isChecked) {
@@ -106,6 +116,35 @@ class MovieDetailFragment : Fragment() {
                     .into(posterPathImage)
             }
         }
+    }
+
+    private fun getCommentFromAlertDialog(): String {
+        var result = "No comments"
+        val editText = EditText(requireActivity())
+
+        activity?.let {
+            // Use the Builder class for convenient dialog construction
+            val builder = AlertDialog.Builder(it)
+            builder
+                .setTitle("Комментарий")
+                .setMessage("Введите комментарий к фильму")
+                .setCancelable(false)
+                .setView(editText)
+                .setPositiveButton(
+                    "Добавить"
+                ) { _, _ ->
+                    result = editText.text.toString()
+                    Log.d("123123123", "result: $result")
+                }
+                .setNegativeButton(
+                    "Отмена"
+                ) { _, _ ->
+                    // do nothing
+                }
+            builder.create().show()
+        } ?: throw IllegalStateException("Activity cannot be null")
+
+        return result
     }
 
     private fun getGenres(movie: MovieDetailDTO): String {

@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:id="@+id/main_group">
-        <item android:title="New movies" />
-        <item android:title="Popular" />
-        <item android:title="For you" />
+
+        <item
+            android:id="@+id/contacts_option_menu"
+            android:icon="@drawable/ic_baseline_contact_phone_24"
+            android:title="@string/show_contacts"
+            app:showAsAction="always"/>
     </group>
-
-    <group android:id="@+id/service_group">
-
-        <item android:id="@+id/refresh_item_main_option_menu"
-            android:title="@string/refresh"/>
-
-        <item android:id="@+id/exit_item_main_option_menu"
-            android:title="@string/exit" />
-    </group>
-
-
-
 </menu>

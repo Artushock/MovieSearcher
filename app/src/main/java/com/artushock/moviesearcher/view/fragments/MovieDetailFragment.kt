@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
 import com.artushock.moviesearcher.model.Movie
@@ -16,6 +17,7 @@ import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -71,15 +73,19 @@ class MovieDetailFragment : Fragment() {
 
     private fun setMovieData(movie: MovieDetailDTO) {
         with(binding) {
-            addToSeenBtn.isChecked = viewModel.isTheMovieExistInDb(movie.id)
-            addToSeenBtn.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    getCommentFromAlertDialog(movie)
-                } else {
-                    val mv = getMovie(movie, "")
-                    viewModel.deleteFromSeenMovieToDataBase(mv)
+            lifecycleScope.launch {
+                addToSeenBtn.isChecked = viewModel.isTheMovieExistInDb(movie.id)
+
+                addToSeenBtn.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        getCommentFromAlertDialog(movie)
+                    } else {
+                        val mv = getMovie(movie, "")
+                        lifecycleScope.launch { viewModel.deleteFromSeenMovieToDataBase(mv) }
+                    }
                 }
             }
+
 
             movieNameDetailTv.text = movie.title
             movieFullDetailTv.text = movie.original_title
@@ -131,13 +137,13 @@ class MovieDetailFragment : Fragment() {
                 ) { _, _ ->
                     val comment = editText.text.toString()
                     val mv = getMovie(movie, comment)
-                    viewModel.saveSeenMovieToDataBase(mv)
+                    lifecycleScope.launch { viewModel.saveSeenMovieToDataBase(mv) }
                 }
                 .setNegativeButton(
                     "Отмена"
                 ) { _, _ ->
                     val mv = getMovie(movie, "No comments")
-                    viewModel.saveSeenMovieToDataBase(mv)
+                    lifecycleScope.launch { viewModel.saveSeenMovieToDataBase(mv) }
                 }
             builder.create().show()
         } ?: throw IllegalStateException("Activity cannot be null")

@@ -2,11 +2,14 @@ package com.artushock.moviesearcher.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.artushock.moviesearcher.app.App.Companion.getSeenMoviesDao
 import com.artushock.moviesearcher.model.Movie
 import com.artushock.moviesearcher.model.MovieDetailState
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.repositories.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,17 +28,25 @@ class DetailViewModel(
         remoteRepository.getMovieDataFromServer(id, callback)
     }
 
-    fun saveSeenMovieToDataBase(movie: Movie) {
+    suspend fun saveSeenMovieToDataBase(movie: Movie) {
         seenMoviesRepository.saveEntity(movie)
     }
 
-    fun deleteFromSeenMovieToDataBase(movie: Movie) {
-        seenMoviesRepository.deleteEntityByMovieId(movie.movieId)
+    suspend fun deleteFromSeenMovieToDataBase(movie: Movie) {
+        viewModelScope.launch { seenMoviesRepository.deleteEntityByMovieId(movie.movieId) }
     }
 
-    fun isTheMovieExistInDb(movieId: Int): Boolean {
-        return !seenMoviesRepository.checkMovieById(movieId)
+    suspend fun isTheMovieExistInDb(movieId: Int): Boolean {
+        return !checkMovieInDB(movieId)
+        //return false
     }
+
+    private suspend fun checkMovieInDB(movieId: Int) =
+        withContext(viewModelScope.coroutineContext) {
+            seenMoviesRepository.checkMovieById(
+                movieId
+            )
+        }
 
     private val callback = object : Callback<MovieDetailDTO> {
         override fun onResponse(call: Call<MovieDetailDTO>, response: Response<MovieDetailDTO>) {

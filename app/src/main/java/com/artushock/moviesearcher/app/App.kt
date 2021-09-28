@@ -48,7 +48,7 @@ class App : Application() {
                                 SeenMoviesDataBase::class.java,
                                 DB_NAME
                             )
-                                .allowMainThreadQueries()
+                                //.allowMainThreadQueries()
                                 .build()
                         }
                     }

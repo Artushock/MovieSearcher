@@ -10,11 +10,13 @@ import android.widget.Button
 import android.widget.Switch
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.app.App
 import com.artushock.moviesearcher.databinding.FragmentSettingsBinding
 import com.artushock.moviesearcher.model.repositories.LocalRepository
 import com.artushock.moviesearcher.model.repositories.LocalRepositoryImpl
+import kotlinx.coroutines.launch
 
 const val APP_PREFERENCES_KEY = "APP_PREFERENCES_KEY"
 const val ADULT_CONTENT_SHOW_KEY = "ADULT_CONTENT_SHOW_KEY"
@@ -45,7 +47,11 @@ class SettingsFragment : Fragment() {
     private fun initClearDataBaseButton() {
         val clearDbButton: Button = binding.clearDbBtn
         clearDbButton.setOnClickListener() {
-            seenMoviesRepository.clearDB()
+
+            lifecycleScope.launch {
+                seenMoviesRepository.clearDB()
+            }
+
             Toast.makeText(
                 requireActivity(),
                 "Список просмотренных фильмов очищен",

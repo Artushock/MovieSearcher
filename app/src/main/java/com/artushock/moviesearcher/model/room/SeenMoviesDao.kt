@@ -7,23 +7,23 @@ import com.artushock.moviesearcher.model.Movie
 interface SeenMoviesDao {
 
     @Query("SELECT * FROM SeenMoviesEntity")
-    fun all(): List<SeenMoviesEntity>
+    suspend fun all(): List<SeenMoviesEntity>
 
     @Query("SELECT * FROM SeenMoviesEntity WHERE movieId = :movieId")
-    fun getMoviesById(movieId: Int): List<SeenMoviesEntity>
+    suspend fun getMoviesById(movieId: Int): List<SeenMoviesEntity>
 
     @Query("DELETE FROM SeenMoviesEntity WHERE movieId = :movieId")
-    fun deleteMoviesByMovieId(movieId: Int)
+    suspend fun deleteMoviesByMovieId(movieId: Int)
 
     @Query("DELETE FROM SeenMoviesEntity")
-    fun clearSeenMoviesList()
+    suspend fun clearSeenMoviesList()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(entity: SeenMoviesEntity)
+    suspend fun insert(entity: SeenMoviesEntity)
 
     @Update
-    fun update(entity: SeenMoviesEntity)
+    suspend fun update(entity: SeenMoviesEntity)
 
     @Delete
-    fun delete(entity: SeenMoviesEntity)
+    suspend fun delete(entity: SeenMoviesEntity)
 }

@@ -5,13 +5,13 @@ import com.artushock.moviesearcher.model.dto.MoviesDTO
 
 interface LocalRepository {
 
-    fun getAllSeenMovies(): List<Movie>
+    suspend fun getAllSeenMovies(): List<Movie>
 
-    fun saveEntity(movie: Movie)
+    suspend fun saveEntity(movie: Movie)
 
-    fun deleteEntityByMovieId(id: Int)
+    suspend fun deleteEntityByMovieId(id: Int)
 
-    fun clearDB()
+    suspend fun clearDB()
 
-    fun checkMovieById(id: Int): Boolean
+    suspend fun checkMovieById(id: Int): Boolean
 }

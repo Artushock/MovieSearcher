@@ -1,11 +1,9 @@
 package com.artushock.moviesearcher.view
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -49,10 +47,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return when (item.itemId) {
             R.id.contacts_option_menu -> {
-                val navController = findNavController(R.id.nav_host_fragment_activity_main)
                 navController.navigate(R.id.contacts_fragment)
+                true
+            }
+            R.id.map_option_menu -> {
+                navController.navigate(R.id.map_fragment)
                 true
             }
             else -> false

@@ -7,6 +7,12 @@
             android:id="@+id/contacts_option_menu"
             android:icon="@drawable/ic_baseline_contact_phone_24"
             android:title="@string/show_contacts"
-            app:showAsAction="always"/>
+            app:showAsAction="ifRoom"/>
+
+        <item
+            android:id="@+id/map_option_menu"
+            android:icon="@drawable/ic_baseline_my_location_24"
+            android:title="@string/show_map"
+            app:showAsAction="ifRoom"/>
     </group>
 </menu>

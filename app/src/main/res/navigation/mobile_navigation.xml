@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_main_to_contactsFragment"
             app:destination="@id/contacts_fragment" />
+        <action
+            android:id="@+id/action_nav_main_to_mapFragment"
+            app:destination="@id/map_fragment" />
     </fragment>
 
     <fragment
@@ -38,4 +41,9 @@
         android:name="com.artushock.moviesearcher.view.fragments.ContactsFragment"
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts" />
+    <fragment
+        android:id="@+id/map_fragment"
+        android:name="com.artushock.moviesearcher.view.fragments.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

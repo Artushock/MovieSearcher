@@ -54,5 +54,6 @@
     <string name="seen_movies_database">Seen movies database</string>
     <string name="clear_seen_movies_database">Clear seen movies database</string>
     <string name="show_contacts">Show contacts</string>
+    <string name="show_location">Show location</string>
     <string name="show_map">Show map</string>
 </resources>

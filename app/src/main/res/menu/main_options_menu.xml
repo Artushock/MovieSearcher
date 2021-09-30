@@ -10,8 +10,14 @@
             app:showAsAction="ifRoom"/>
 
         <item
-            android:id="@+id/map_option_menu"
+            android:id="@+id/location_option_menu"
             android:icon="@drawable/ic_baseline_my_location_24"
+            android:title="@string/show_location"
+            app:showAsAction="ifRoom"/>
+
+        <item
+            android:id="@+id/map_option_menu"
+            android:icon="@drawable/ic_baseline_map_24"
             android:title="@string/show_map"
             app:showAsAction="ifRoom"/>
     </group>

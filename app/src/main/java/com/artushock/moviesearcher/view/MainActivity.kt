@@ -53,8 +53,12 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.contacts_fragment)
                 true
             }
+            R.id.location_option_menu -> {
+                navController.navigate(R.id.location_fragment)
+                true
+            }
             R.id.map_option_menu -> {
-                navController.navigate(R.id.map_fragment)
+                navController.navigate(R.id.maps_fragment)
                 true
             }
             else -> false

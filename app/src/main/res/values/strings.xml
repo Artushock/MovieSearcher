@@ -56,4 +56,6 @@
     <string name="show_contacts">Show contacts</string>
     <string name="show_location">Show location</string>
     <string name="show_map">Show map</string>
+    <string name="search_btn">Поиск</string>
+    <string name="enter_address">Введите адрес</string>
 </resources>

@@ -19,7 +19,8 @@ class MovieDetailDTO(
     val runtime: Int,
     val title: String,
     val vote_average: Double,
-    val poster_path: String
+    val poster_path: String,
+    val credits: @RawValue Credits
 ) : Parcelable {
     inner class Genre(
         val id: Int,
@@ -31,4 +32,24 @@ class MovieDetailDTO(
         val name: String,
         val origin_country: String
     )
+
+    inner class Credits(
+        val cast: List<Actor>,
+        val crew: List<MemberOfCrew>
+    ) {
+        inner class Actor(
+            val id: Int,
+            val name: String,
+            val profile_path: String
+        )
+
+        inner class MemberOfCrew(
+            val id: Int,
+            val name: String,
+            val job: String,
+            val profile_path: String
+        )
+    }
+
+
 }

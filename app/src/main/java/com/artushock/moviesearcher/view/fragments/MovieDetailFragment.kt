@@ -1,10 +1,12 @@
 package com.artushock.moviesearcher.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -100,7 +102,25 @@ class MovieDetailFragment : Fragment() {
                 .get()
                 .load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
                 .into(posterPathImage)
+
+            Log.d("123", " ${movie.credits.cast[0].name}")
+
+            val actorsContainer = binding.actorsContainer
+            for (i in 0 until 3) {
+                val actorTextView = TextView(context)
+                actorTextView.text = movie.credits.cast[i].name
+                actorTextView.setOnClickListener {
+                    with(movie.credits.cast[i]) {
+                        showActorsDetail(id, name)
+                    }
+                }
+                actorsContainer.addView(actorTextView)
+            }
         }
+    }
+
+    private fun showActorsDetail(id: Int, name: String) {
+        Toast.makeText(context, "Actor $name has id: $id", Toast.LENGTH_SHORT).show()
     }
 
     private fun getMovie(

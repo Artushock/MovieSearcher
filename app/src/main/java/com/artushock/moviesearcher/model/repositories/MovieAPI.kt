@@ -13,7 +13,8 @@ interface MovieAPI {
     fun getMovieById(
         @Path("id") id: Int,
         @Query("api_key") api_key: String,
-        @Query("language") language: String
+        @Query("language") language: String,
+        @Query("append_to_response") append_to_response: String
     ): Call<MovieDetailDTO>
 
     @GET("3/movie/top_rated?")

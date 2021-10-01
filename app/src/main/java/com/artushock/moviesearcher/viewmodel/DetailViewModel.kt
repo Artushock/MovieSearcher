@@ -1,5 +1,6 @@
 package com.artushock.moviesearcher.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -52,6 +53,9 @@ class DetailViewModel(
         override fun onResponse(call: Call<MovieDetailDTO>, response: Response<MovieDetailDTO>) {
 
             val serverResponse: MovieDetailDTO? = response.body()
+            serverResponse?.let {
+                Log.d("123123123", "RESPONSE \n${response.raw()}")
+            }
             movieDetailLiveData.postValue(
                 if (response.isSuccessful && serverResponse != null) {
                     checkResponse(serverResponse)

@@ -21,7 +21,8 @@ class RemoteDataSource {
         .create(MovieAPI::class.java)
 
     fun getMovieDetailDataFromServer(id: Int, callback: Callback<MovieDetailDTO>) {
-        movieApi.getMovieById(id, BuildConfig.THEMOVIEDB_API_KEY, "ru-RU").enqueue(callback)
+        movieApi.getMovieById(id, BuildConfig.THEMOVIEDB_API_KEY, "ru-RU", "credits")
+            .enqueue(callback)
     }
 
     fun getTopRatedMoviesDataFromServer(page: Int, callback: Callback<MoviesDTO>) {
@@ -29,7 +30,8 @@ class RemoteDataSource {
     }
 
     fun getNowPlayingMoviesDataFromServer(page: Int, callback: Callback<MoviesDTO>) {
-        movieApi.getNowPlayingMovies(BuildConfig.THEMOVIEDB_API_KEY, "ru-RU", page).enqueue(callback)
+        movieApi.getNowPlayingMovies(BuildConfig.THEMOVIEDB_API_KEY, "ru-RU", page)
+            .enqueue(callback)
     }
 
     fun getPopularMoviesDataFromServer(page: Int, callback: Callback<MoviesDTO>) {

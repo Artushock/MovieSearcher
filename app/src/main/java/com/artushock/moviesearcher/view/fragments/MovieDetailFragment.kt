@@ -62,14 +62,14 @@ class MovieDetailFragment : Fragment() {
     private fun renderData(state: MovieDetailState) {
         when (state) {
             is MovieDetailState.Loading -> {
-                binding.detailFragmentProgressBar.visibility = View.VISIBLE
+                binding.loadingLayout.fragmentProgressBar.visibility = View.VISIBLE
             }
             is MovieDetailState.Error -> {
-                binding.detailFragmentProgressBar.visibility = View.GONE
+                binding.loadingLayout.fragmentProgressBar.visibility = View.GONE
                 showToast("${state.error}")
             }
             is MovieDetailState.Success -> {
-                binding.detailFragmentProgressBar.visibility = View.GONE
+                binding.loadingLayout.fragmentProgressBar.visibility = View.GONE
                 setMovieData(state.movie)
             }
         }

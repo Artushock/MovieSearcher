@@ -58,4 +58,6 @@
     <string name="show_map">Show map</string>
     <string name="search_btn">Поиск</string>
     <string name="enter_address">Введите адрес</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="download_error">Download error</string>
 </resources>

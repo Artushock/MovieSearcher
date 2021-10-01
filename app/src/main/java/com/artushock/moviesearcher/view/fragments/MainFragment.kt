@@ -52,10 +52,10 @@ class MainFragment : Fragment() {
     private fun render(data: MovieListState) {
         when (data) {
             is MovieListState.Loading -> {
-                binding.mainFragmentProgressBar.visibility = View.VISIBLE
+                binding.loadingLayout.fragmentProgressBar.visibility = View.VISIBLE
             }
             is MovieListState.Error -> {
-                binding.mainFragmentProgressBar.visibility = View.GONE
+                binding.loadingLayout.fragmentProgressBar.visibility = View.GONE
                 view?.showSnackBar("Error ${data.e}", "Reload", {
                     viewModel.getMovies()
                 })
@@ -77,7 +77,7 @@ class MainFragment : Fragment() {
     }
 
     private fun displayMovieList(movies: MoviesDTO, recyclerView: RecyclerView) {
-        binding.mainFragmentProgressBar.visibility = View.GONE
+        binding.loadingLayout.fragmentProgressBar.visibility = View.GONE
         initRecyclerView(recyclerView, movies)
     }
 

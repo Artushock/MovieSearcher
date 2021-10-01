@@ -60,7 +60,7 @@
         tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/actor_detail_maps_fragment"
-        android:name="com.artushock.moviesearcher.view.fragments.ActorDetailMapsFragment"
+        android:name="com.artushock.moviesearcher.view.fragments.PersonDetailMapsFragment"
         android:label="Actor details"
         tools:layout="@layout/fragment_actor_detail_maps" />
 </navigation>

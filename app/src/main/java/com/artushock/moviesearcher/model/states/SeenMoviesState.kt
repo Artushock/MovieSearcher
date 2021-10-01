@@ -1,4 +1,6 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.model.states
+
+import com.artushock.moviesearcher.model.Movie
 
 sealed class SeenMoviesState {
     data class Success(

@@ -2,26 +2,21 @@ package com.artushock.moviesearcher.view.fragments
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.SearchFragmentBinding
 import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.dto.MovieDetailDTO
-import com.artushock.moviesearcher.model.MovieLoaderByID
-import com.artushock.moviesearcher.model.SeenMoviesState
+import com.artushock.moviesearcher.model.states.SeenMoviesState
 import com.artushock.moviesearcher.view.adapters.SeenMoviesAdapter
 import com.artushock.moviesearcher.view.showSnackBar
 import com.artushock.moviesearcher.viewmodel.SeenMoviesViewModel

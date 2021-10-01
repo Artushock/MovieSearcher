@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.MainFragmentBinding
 import com.artushock.moviesearcher.model.MovieCategory
-import com.artushock.moviesearcher.model.MovieListState
+import com.artushock.moviesearcher.model.states.MovieListState
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.artushock.moviesearcher.view.adapters.MoviesPreviewAdapter
 import com.artushock.moviesearcher.view.showSnackBar

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artushock.moviesearcher.app.App.Companion.getSeenMoviesDao
 import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.MovieDetailState
+import com.artushock.moviesearcher.model.states.MovieDetailState
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.model.repositories.*
 import kotlinx.coroutines.launch

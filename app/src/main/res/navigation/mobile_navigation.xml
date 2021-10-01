@@ -38,7 +38,11 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.artushock.moviesearcher.view.fragments.MovieDetailFragment"
         android:label="Movie detail"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail" >
+        <action
+            android:id="@+id/action_movieDetailFragment_to_actorDetailMapsFragment"
+            app:destination="@id/actor_detail_maps_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/contacts_fragment"
         android:name="com.artushock.moviesearcher.view.fragments.ContactsFragment"
@@ -54,4 +58,9 @@
         android:name="com.artushock.moviesearcher.view.fragments.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/actor_detail_maps_fragment"
+        android:name="com.artushock.moviesearcher.view.fragments.ActorDetailMapsFragment"
+        android:label="Actor details"
+        tools:layout="@layout/fragment_actor_detail_maps" />
 </navigation>

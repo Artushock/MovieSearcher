@@ -1,5 +1,6 @@
-package com.artushock.moviesearcher.model
+package com.artushock.moviesearcher.model.states
 
+import com.artushock.moviesearcher.model.MovieCategory
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 
 sealed class MovieListState {

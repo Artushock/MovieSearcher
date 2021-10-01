@@ -12,10 +12,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.artushock.moviesearcher.R
 import com.artushock.moviesearcher.databinding.FragmentMovieDetailBinding
 import com.artushock.moviesearcher.model.Movie
-import com.artushock.moviesearcher.model.MovieDetailState
+import com.artushock.moviesearcher.model.states.MovieDetailState
 import com.artushock.moviesearcher.model.dto.MovieDetailDTO
 import com.artushock.moviesearcher.viewmodel.DetailViewModel
 import com.squareup.picasso.Picasso
@@ -23,7 +24,8 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-const val MOVIE_ID = "MOVIE_FOR_DETAIL"
+const val MOVIE_ID = "MOVIE_ID_FOR_DETAIL"
+const val ACTOR_ID = "ACTOR_ID_FOR_DETAIL"
 
 class MovieDetailFragment : Fragment() {
 
@@ -111,7 +113,7 @@ class MovieDetailFragment : Fragment() {
                 actorTextView.text = movie.credits.cast[i].name
                 actorTextView.setOnClickListener {
                     with(movie.credits.cast[i]) {
-                        showActorsDetail(id, name)
+                        showActorsDetail(id)
                     }
                 }
                 actorsContainer.addView(actorTextView)
@@ -119,8 +121,11 @@ class MovieDetailFragment : Fragment() {
         }
     }
 
-    private fun showActorsDetail(id: Int, name: String) {
-        Toast.makeText(context, "Actor $name has id: $id", Toast.LENGTH_SHORT).show()
+    private fun showActorsDetail(id: Int) {
+        val bundle = Bundle()
+        bundle.putInt(ACTOR_ID, id)
+        val navController = findNavController()
+        navController.navigate(R.id.actor_detail_maps_fragment, bundle)
     }
 
     private fun getMovie(

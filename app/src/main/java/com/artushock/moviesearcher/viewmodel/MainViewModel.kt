@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.artushock.moviesearcher.app.App
 import com.artushock.moviesearcher.model.MovieCategory
-import com.artushock.moviesearcher.model.MovieListState
+import com.artushock.moviesearcher.model.states.MovieListState
 import com.artushock.moviesearcher.model.dto.GenresDTO
 import com.artushock.moviesearcher.model.dto.MoviesDTO
 import com.artushock.moviesearcher.model.repositories.RemoteDataSource

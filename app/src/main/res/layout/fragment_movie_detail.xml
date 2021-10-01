@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".view.MovieDetailFragment">
+    tools:context=".view.fragments.MovieDetailFragment">
+
+    <include
+        android:id="@+id/loading_layout"
+        layout="@layout/loading_layout" />
 
     <TextView
         android:id="@+id/movie_name_detail_tv"
@@ -30,12 +34,13 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/poster_path_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#CACACA"
-            android:src="@drawable/empty"
-            android:contentDescription="@string/movie_image_content_description" />
+            android:contentDescription="@string/movie_image_content_description"
+            android:src="@drawable/empty" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,6 +48,13 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
+
+            <ToggleButton
+                android:id="@+id/add_to_seen_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textOff="@string/add_to_seen"
+                android:textOn="@string/remove_from_seen" />
 
             <TextView
                 android:id="@+id/genre_detail_tv"
@@ -92,16 +104,30 @@
                 android:textSize="@dimen/small_detail_text"
                 tools:text="Дата выхода: 01.01.1972" />
 
+            <LinearLayout
+                android:id="@+id/actors_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
         </LinearLayout>
+
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/description_detail_tv"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="@dimen/small_detail_text"
-        tools:text="@string/test_description" />
+        android:layout_marginTop="16dp">
+
+
+        <TextView
+            android:id="@+id/description_detail_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
+            android:textSize="@dimen/small_detail_text"
+            tools:text="@string/test_description" />
+    </ScrollView>
 
 </LinearLayout>

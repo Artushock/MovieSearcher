@@ -19,7 +19,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_actor_detail_maps.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -76,13 +75,16 @@ class PersonDetailMapsFragment : Fragment() {
     }
 
     private fun setPersonData(personDetail: PersonDTO) {
-        binding.actorNameDetailTv.text = personDetail.name
-        binding.actorFullDetailTv.text = personDetail.place_of_birth
+        with(binding) {
+            actorNameDetailTv.text = personDetail.name
+            actorFullDetailTv.text = personDetail.place_of_birth
 
-        Picasso
-            .get()
-            .load("https://image.tmdb.org/t/p/w500/${personDetail.profile_path}")
-            .into(profile_iv)
+            Picasso
+                .get()
+                .load("https://image.tmdb.org/t/p/w500/${personDetail.profile_path}")
+                .into(profileIv)
+        }
+
     }
 
     private fun showPlaceOfBirthOnMap(placeOfBirth: String) {

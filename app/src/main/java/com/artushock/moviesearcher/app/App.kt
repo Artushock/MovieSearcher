@@ -3,16 +3,24 @@ package com.artushock.moviesearcher.app
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.room.Room
 import com.artushock.moviesearcher.model.room.SeenMoviesDao
 import com.artushock.moviesearcher.model.room.SeenMoviesDataBase
 import com.artushock.moviesearcher.view.fragments.APP_PREFERENCES_KEY
+import com.google.firebase.messaging.FirebaseMessaging
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
         appInstance = this
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                Log.d("123123123", "token ${task.result.toString()}")
+            }
+        }
     }
 
     companion object {

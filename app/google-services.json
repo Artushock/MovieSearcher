@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "843907529413",
+    "project_id": "moviesearcher-dff06",
+    "storage_bucket": "moviesearcher-dff06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843907529413:android:feae623fb30946af5a4eac",
+        "android_client_info": {
+          "package_name": "com.artushock.moviesearcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843907529413-5j9iugo16edv2akqpt6fre4nh4mdtbq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuG7TnSOYRXMiopQvL71TgdRE2bUnA4kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843907529413-5j9iugo16edv2akqpt6fre4nh4mdtbq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,9 @@
 package com.artushock.moviesearcher.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,12 +31,38 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_main,
-                R.id.nav_search,
-                R.id.nav_settings
+                R.id.nav_seen_movies,
+                R.id.nav_settings,
             )
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return when (item.itemId) {
+            R.id.contacts_option_menu -> {
+                navController.navigate(R.id.contacts_fragment)
+                true
+            }
+            R.id.location_option_menu -> {
+                navController.navigate(R.id.location_fragment)
+                true
+            }
+            R.id.map_option_menu -> {
+                navController.navigate(R.id.maps_fragment)
+                true
+            }
+            else -> false
+        }
+
     }
 }

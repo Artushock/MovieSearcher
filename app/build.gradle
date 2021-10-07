@@ -30,10 +30,31 @@ android {
         viewBinding true
     }
 
+    signingConfigs {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('signing_configs.properties').newDataInputStream())
+        def storePath = properties.getProperty("keystore_path", "")
+        def alias = properties.getProperty("key_alias", "")
+        def storePass = properties.getProperty("store_password", "")
+        def keyPass = properties.getProperty("key_password", "")
+
+        release {
+            storeFile file(storePath)
+            storePassword storePass
+            keyAlias alias
+            keyPassword keyPass
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            versionNameSuffix "-debug"
         }
     }
 
@@ -63,7 +84,6 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.google.firebase:firebase-messaging-ktx:22.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.core:core-ktx:1.6.0'
 
@@ -76,7 +96,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha09"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

@@ -1,7 +1,6 @@
 package com.artushock.moviesearcher.view.fragments
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
@@ -92,7 +91,6 @@ class ContactsFragment : Fragment() {
         permissionReadContacts.launch(Manifest.permission.READ_CONTACTS)
     }
 
-    @SuppressLint("Range")
     private fun getContacts() {
         context?.let {
 
@@ -108,9 +106,14 @@ class ContactsFragment : Fragment() {
             cursorWithContacts?.let { cursor ->
                 for (i in 0..cursor.count) {
                     if (cursor.moveToPosition(i)) {
-                        val name =
-                            cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                        addView(it, name)
+                        val columnIndex =
+                            cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                        if (columnIndex >= 0) {
+                            val name = cursor.getString(columnIndex)
+                            addView(it, name)
+                        } else {
+                            throw Throwable("Cursor column index out of range")
+                        }
                     }
                 }
             }

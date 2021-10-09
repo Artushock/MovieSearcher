@@ -1,4 +1,4 @@
-package com.artushock.moviesearcher.model.states
+package com.artushock.moviesearcher.model.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

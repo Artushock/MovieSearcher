@@ -5,7 +5,7 @@
     <string name="cancel_str">Cancel</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="main_str">Main</string>
-    <string name="main_search">Search</string>
+    <string name="seen_movies">Seen Movies</string>
     <string name="main_settings">Settings</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -27,15 +27,37 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="exit">Exit</string>
     <string name="refresh">Refresh</string>
-    <string name="popular">Popular</string>
-    <string name="new_movies">New movies</string>
+    <string name="popular">Popular movies</string>
+    <string name="now_playing">Now playing movies</string>
     <string name="test_description">Культовая экранизация одноименного романа Марио Пьюзо «Крестный отец», созданная Френсисом Фордом Копполой, и по сей день остается одним из лучших фильмов в жанре криминальной драмы. 1945–1955 годы. Дон Вито Корлеоне – глава сицилийского мафиозного клана – держит в страхе весь город, без его ведома не может произойти ни одно значимое событие, особенно в криминальной сфере. Но, контролируя посторонних людей, Вито забывает о семье: его сын Майкл, только что вернувшийся с войны героем, отнюдь не желает продолжать семейное дело, идти по стопам отца и заниматься криминалом. Да и в городе начинаются беспорядки: появляются люди, которым вовсе не улыбается подчиняться какому-то там Корлеоне, Крестному отцу мафии. Они хотят навести в городе свои порядки, и на Дона Корлеоне совершается покушение…</string>
-    <string name="budget_format">Бюджет: %d</string>
-    <string name="box_office_format">Сборы: %d</string>
+    <string name="budget_format">Бюджет: %d$</string>
+    <string name="box_office_format">Сборы: %d$</string>
+    <string name="runtime">%d мин.</string>
     <string name="movie_image_content_description">Movie image</string>
     <string name="bookmark_image_content_description">Bookmark image</string>
     <string name="star_image_content_description">Star image</string>
     <string name="movie_icon">Movie icon</string>
     <string name="movie_name">Movie name</string>
     <string name="go">GO</string>
+    <string name="top_rated">Top rated movies</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie_confines">Confines</string>
+    <string name="turn_on_adult_content">Turn on to show adult content</string>
+    <string name="turn_off_adult_content">Turn off to forbid adult content</string>
+    <string name="turn_on_cartoons">Turn on to show cartoons</string>
+    <string name="turn_off_cartoons">Turn off to forbid cartoons</string>
+    <string name="show_cartoons">Show cartoons</string>
+    <string name="adult_content">Adult content</string>
+    <string name="add_to_seen">Add to seen</string>
+    <string name="remove_from_seen">Remove from seen</string>
+    <string name="seen_movies_database">Seen movies database</string>
+    <string name="clear_seen_movies_database">Clear seen movies database</string>
+    <string name="show_contacts">Show contacts</string>
+    <string name="show_location">Show location</string>
+    <string name="show_map">Show map</string>
+    <string name="search_btn">Поиск</string>
+    <string name="enter_address">Введите адрес</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="download_error">Download error</string>
 </resources>
